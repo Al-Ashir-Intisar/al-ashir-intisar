@@ -15,4 +15,4 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 
-This is my personal website repository where I showcase personal information, papers and book recommendations!!
+This is my personal github account with repositories where I work on school and external projects related to Data Science and Web Development!!

@@ -2,101 +2,62 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: rgb(223, 243, 251);
-    line-height: 1.6;
-}
-
-header {
-    background-color: #012042;
-    color: #fff;
-    padding: 1rem 0;
-    text-align: center;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: flex-start;
-}
-
-nav ul li {
-    margin: 0 1rem;
-}
-
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-}
-
-main {
-    padding: 2rem;
-}
-
-.profile {
-    display: inline-flex;
-    align-items: center;
-    margin-bottom: 2rem;
-}
-
-.profile-pic {
-    width: 150px;
-    height: 150px;
-    background-color: black;
-    border-radius: 50%;
-    margin-right: 2rem;
-    overflow: hidden;
-    border: 5px solid #012042;
-}
-
-.profile-pic img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.info p {
-    margin: 0.5rem 0;
-}
-
-.content {
-    border: 3px solid #012042;
-    height: 100%;
-}
-
-
-
-/* Styling specifications for buttons */
-
-.button-link {
-    display: inline-block;
-    padding: 5px 5px;
-    color: white;
-    background-color: #012042; /* Button background color */
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    font-weight: bold;
-}
-
-.button-link:hover {
-    background-color: #0056b3; /* Darker shade for hover effect */
-}
-
-/* Styling for blog posts in content div */
-
-.blog-tile {
-    border: 1px solid #ccc;
-    padding: 1rem;
-    margin: 1%;
-    background-color: #fff;
-
-}
-
-/* styling for pdf containers in papers page */
-
-.pdf-container {
-    overflow: hidden;
-    transition: height 0.3s ease;
+    background: #f4f4f9;
+    color: #333;
   }
+  
+  header {
+    background: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+  }
+  
+  main {
+    padding: 2em;
+  }
+  
+  section {
+    margin-bottom: 2em;
+  }
+  
+  #menu-container, #rating-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+  }
+  
+  .card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33% - 1em);
+    box-sizing: border-box;
+  }
+  
+  .card h3 {
+    margin: 0 0 0.5em;
+  }
+  
+  .card button {
+    margin-top: 1em;
+    padding: 0.5em;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  footer {
+    text-align: center;
+    background: #4CAF50;
+    color: white;
+    padding: 1em 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+  

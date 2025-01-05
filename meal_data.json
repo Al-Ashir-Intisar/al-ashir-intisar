@@ -1,14 +1,14 @@
 [
-  {
-    "Meal":"Breakfast",
-    "Food_Items":"Country Vegetable Scramble"
-  },
-  {
-    "Meal":"Brunch",
-    "Food_Items":"Kornder Farms Beef Burger, Herb Roasted Chicken Breast, Malibu Burger, Fries, House Made Warm Apple Crisp Streusel, House-Made Marinara, Creamy Garlic Alfredo, Roasted Seasonal Vegetables, Five Cheese Garlic Bread Sticks"
-  },
-  {
-    "Meal":"Dinner",
-    "Food_Items":"Al Pastor Pork, Chicken Mole, Adobo Lentils, White Rice, Brown Rice, Kornder Farms Beef Burger, Herb Roasted Chicken Breast, Malibu Burger, Fries, House-Made Marinara, Creamy Garlic Alfredo, Roasted Seasonal Vegetables, Five Cheese Garlic Bread Sticks, Grasshopper Cake, Banana Cream Pie Parfait, Boston Cream Cake, Kit Kat Blondie Bar"
-  }
+    {
+        "Meal": "Breakfast",
+        "Food_Items": "Yogurt Bar"
+    },
+    {
+        "Meal": "Brunch",
+        "Food_Items": "Kornder Farms Beef Burger, Herb Roasted Chicken Breast, Malibu Burger, Fries, Buttermilk Biscuits and Sausage Gravy, Buttermilk Biscuits and Vegetable Sausage Gravy, House-Made Marinara, Creamy Garlic Alfredo, Pepperoni, Sausage, Cheese"
+    },
+    {
+        "Meal": "Dinner",
+        "Food_Items": "Al Pastor Pork, Chicken Mole, Adobo Lentils, White Rice, Brown Rice, Kornder Farms Beef Burger, Herb Roasted Chicken Breast, Malibu Burger, Fries, Chicken Caprese, Pumpkin Chickpea Dahl, Fischer Farms Char Sui Pork Belly, Minn-Tofu Char Sui, Vegetable Fried Rice, Wok Charred Chinese Broccoli, House-Made Marinara, Creamy Garlic Alfredo, Roasted Seasonal Vegetables, Pepperoni, Sausage, Cheese, Grasshopper Cake, Banana Cream Pie Parfait, Boston Cream Cake, Kit Kat Blondie Bar"
+    }
 ]

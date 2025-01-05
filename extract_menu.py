@@ -1,55 +1,67 @@
-import pandas as pd
+import openai
+import json
+import re
 
-# Meal data extracted from the PDF in structured format
-meal_data = {
-    "Meal": ["Breakfast", "Brunch", "Dinner"],
-    "Food_Items": [
-        [
-            "Country Vegetable Scramble"
-        ],
-        [
-            "Kornder Farms Beef Burger",
-            "Herb Roasted Chicken Breast",
-            "Malibu Burger",
-            "Fries",
-            "House Made Warm Apple Crisp Streusel",
-            "House-Made Marinara",
-            "Creamy Garlic Alfredo",
-            "Roasted Seasonal Vegetables",
-            "Five Cheese Garlic Bread Sticks"
-        ],
-        [
-            "Al Pastor Pork",
-            "Chicken Mole",
-            "Adobo Lentils",
-            "White Rice",
-            "Brown Rice",
-            "Kornder Farms Beef Burger",
-            "Herb Roasted Chicken Breast",
-            "Malibu Burger",
-            "Fries",
-            "House-Made Marinara",
-            "Creamy Garlic Alfredo",
-            "Roasted Seasonal Vegetables",
-            "Five Cheese Garlic Bread Sticks",
-            "Grasshopper Cake",
-            "Banana Cream Pie Parfait",
-            "Boston Cream Cake",
-            "Kit Kat Blondie Bar"
+# Prompt for OpenAI API key
+api_key = input("Enter your OpenAI API key: ").strip()
+
+# Initialize the client with the API key
+client = openai.Client(api_key=api_key)
+
+
+# Email content
+with open("latest_email.txt", "r", encoding="utf-8") as file:
+    email_content = file.read()
+
+# Create the structured prompt
+prompt = f"""
+Extract the menu from the following email text and structure it similar ot this JSON format (include all the items in the email):
+[
+  {{ "Meal": "Breakfast", "Food_Items": "Yogurt Bar"... }},
+  {{ "Meal": "Brunch", "Food_Items": "Kornder Farms Beef Burger"... }},
+  {{ "Meal": "Dinner", "Food_Items": "Al Pastor Pork, Chicken Mole"... }}
+]
+Email text:
+{email_content}
+"""
+
+
+# Call the API using the `client.chat.completions.create` method
+try:
+    response = client.chat.completions.create(
+        model="gpt-4o-2024-08-06",  # Replace with your specific model version if needed
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant that extracts structured data. Only return the json object no need for extra data/explanation."},
+            {"role": "user", "content": prompt}
         ]
-    ]
-}
+    )
 
-# Convert the data to a DataFrame
-df = pd.DataFrame({
-    "Meal": meal_data["Meal"],
-    "Food_Items": [", ".join(items) for items in meal_data["Food_Items"]]
-})
+# Extract JSON from the response
+    content = response.choices[0].message.content  # Correctly access the content
 
-# Generate a properly formatted JSON file
-json_path = "meal_data.json"
+    print(content)
 
-# Save as an array of objects
-df.to_json(json_path, orient="records", indent=2)
+    # # Write the result to a .txt file
+    with open("latest_menu.txt", "w") as file:
+         file.write(content)
+    
+    output_file_path = 'meal_data.json'
 
-print(f"JSON file saved to: {json_path}")
+    # Use regex to extract only the JSON content between ```json and the closing ```
+    json_match = re.search(r"```json(.*?)```", content, flags=re.DOTALL)
+
+    if json_match:
+        cleaned_text = json_match.group(1).strip()
+        # Parse the JSON content
+        json_data = json.loads(cleaned_text)
+
+        # Write the JSON data to a new .json file
+        with open(output_file_path, 'w') as json_file:
+            json.dump(json_data, json_file, indent=4)
+
+        print(f"JSON content successfully written to {output_file_path}")
+    else:
+        print("No valid JSON content found in the file.")
+
+except Exception as e:
+    print(f"An error occurred: {e}")

@@ -1,4 +1,106 @@
-// Load CSV data and populate the menu
+// Google API configuration
+const CLIENT_ID = "965317836494-18jk5m5lhroud6so3uqe5e3gg9pbk5rg.apps.googleusercontent.com"; // From your credentials file
+const SPREADSHEET_ID = "11Oks2e6aCiWezsOdhXyXoHccOheP80gottTouZ_LfIg";
+const SHEET_NAME = "ratings";
+
+let tokenClient;
+let gapiInited = false;
+let gisInited = false;
+
+function gapiLoaded() {
+  gapi.load("client", initializeGapiClient);
+}
+
+async function initializeGapiClient() {
+  await gapi.client.init({
+    discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+  });
+  gapiInited = true;
+  maybeEnableButtons();
+}
+
+function gisLoaded() {
+  tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID,
+    scope: "https://www.googleapis.com/auth/spreadsheets",
+    callback: "", // Will be set dynamically
+  });
+  gisInited = true;
+  maybeEnableButtons();
+}
+
+function maybeEnableButtons() {
+  if (gapiInited && gisInited) {
+    console.log("Google APIs are ready.");
+  }
+}
+
+// Append data to the sheet
+async function appendToSheet(meal, rating) {
+  const timestamp = new Date().toISOString();
+  const values = [[meal, rating, timestamp]];
+
+  try {
+    const response = await gapi.client.sheets.spreadsheets.values.append({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${SHEET_NAME}!A1`,
+      valueInputOption: "USER_ENTERED",
+      insertDataOption: "INSERT_ROWS",
+      resource: {
+        values: values,
+      },
+    });
+    console.log("Data appended successfully:", response);
+  } catch (error) {
+    console.error("Error appending data:", error);
+  }
+}
+
+// Submit rating with authorization
+function submitRating(meal) {
+  const rating = document.getElementById(`rating-${meal}`).value;
+
+  if (!rating) {
+    alert("Please select a rating.");
+    return;
+  }
+
+  // Request authorization if needed
+  tokenClient.callback = async (resp) => {
+    if (resp.error) {
+      console.error(resp.error);
+      alert("Authorization failed. Please try again.");
+      return;
+    }
+
+    // If authorized, append the rating
+    console.log("Authorization successful. Submitting rating...");
+    await appendToSheet(meal, rating);
+  };
+
+  if (gapi.client.getToken() === null) {
+    tokenClient.requestAccessToken({ prompt: "consent" });
+  } else {
+    appendToSheet(meal, rating);
+  }
+}
+
+// Load the libraries dynamically
+function loadLibraries() {
+  const gapiScript = document.createElement("script");
+  gapiScript.src = "https://apis.google.com/js/api.js";
+  gapiScript.onload = gapiLoaded;
+  document.body.appendChild(gapiScript);
+
+  const gisScript = document.createElement("script");
+  gisScript.src = "https://accounts.google.com/gsi/client";
+  gisScript.onload = gisLoaded;
+  document.body.appendChild(gisScript);
+}
+
+loadLibraries();
+
+// Populate menu and create rating options (unchanged logic)
 fetch('menu.csv')
   .then(response => response.text())
   .then(data => {
@@ -51,45 +153,3 @@ function createRatingOptions(menuData) {
     ratingContainer.appendChild(ratingDiv);
   });
 }
-
-// Replace these constants with your values
-const API_KEY = "AIzaSyCzFiz84aaMQIl-AEUPdI8NC1mFtsCRPXc";
-const SPREADSHEET_ID = "11Oks2e6aCiWezsOdhXyXoHccOheP80gottTouZ_LfIg"; // Replace with your Spreadsheet ID
-const SHEET_NAME = "ratings"; // Replace with your sheet name (default: Sheet1)
-
-function appendToSheet(meal, rating) {
-  const timestamp = new Date().toISOString();
-  const values = [[meal, rating, timestamp]];
-
-  console.time("Append Time");
-
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}!A1:append?valueInputOption=USER_ENTERED&key=${API_KEY}`;
-
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ values }),
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.timeEnd("Append Time");
-      console.log("Data appended successfully:", data);
-    })
-    .catch(error => {
-      console.timeEnd("Append Time");
-      console.error("Error appending data:", error);
-    });
-}
-
-// Example usage (call this function when submitting a rating)
-function submitRating(meal) {
-  const rating = document.getElementById(`rating-${meal}`).value;
-  if (rating) {
-    appendToSheet(meal, rating);
-  } else {
-    alert("Please select a rating.");
-  }
-}
-

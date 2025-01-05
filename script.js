@@ -6,6 +6,7 @@ const SHEET_NAME = "ratings";
 let tokenClient;
 let gapiInited = false;
 let gisInited = false;
+let userEmail = null; // To store the user's email address
 
 function gapiLoaded() {
   gapi.load("client", initializeGapiClient);
@@ -22,7 +23,7 @@ async function initializeGapiClient() {
 function gisLoaded() {
   tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: CLIENT_ID,
-    scope: "https://www.googleapis.com/auth/spreadsheets",
+    scope: "https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/userinfo.email",
     callback: "", // Will be set dynamically
   });
   gisInited = true;
@@ -35,10 +36,23 @@ function maybeEnableButtons() {
   }
 }
 
+// Fetch user email after authentication
+async function fetchUserEmail() {
+  try {
+    const response = await gapi.client.request({
+      path: "https://www.googleapis.com/oauth2/v2/userinfo",
+    });
+    userEmail = response.result.email; // Store the user's email address
+    console.log("User email fetched:", userEmail);
+  } catch (error) {
+    console.error("Error fetching user email:", error);
+  }
+}
+
 // Append data to the sheet
 async function appendToSheet(meal, rating) {
   const timestamp = new Date().toISOString();
-  const values = [[meal, rating, timestamp]];
+  const values = [[meal, rating, timestamp, userEmail]]; // Add email as the fourth column
 
   try {
     const response = await gapi.client.sheets.spreadsheets.values.append({
@@ -73,15 +87,17 @@ function submitRating(meal) {
       return;
     }
 
-    // If authorized, append the rating
-    console.log("Authorization successful. Submitting rating...");
+    // Fetch the user's email and append the rating
+    console.log("Authorization successful. Fetching user email...");
+    await fetchUserEmail();
+    console.log("Submitting rating...");
     await appendToSheet(meal, rating);
   };
 
   if (gapi.client.getToken() === null) {
     tokenClient.requestAccessToken({ prompt: "consent" });
   } else {
-    appendToSheet(meal, rating);
+    fetchUserEmail().then(() => appendToSheet(meal, rating));
   }
 }
 

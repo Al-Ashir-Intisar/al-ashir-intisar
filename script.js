@@ -95,6 +95,9 @@ function submitRating(meal) {
     await fetchUserEmail();
     console.log("Submitting rating...");
     await appendToSheet(meal, foodItem, rating);
+
+      // Reloading the window
+      window.location.reload();
   };
 
   if (gapi.client.getToken() === null) {

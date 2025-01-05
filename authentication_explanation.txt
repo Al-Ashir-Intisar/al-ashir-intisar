@@ -1,0 +1,46 @@
+Written Explanation for Google OAuth2 Verification
+App Name: ShouldIGo
+Developer: Al Ashir Intisar
+
+Why We Need Access to Sensitive and/or Restricted User Data
+
+Our app, ShouldIGo, is a meal decision-making tool designed for students to view cafeteria menus, rate meals, and store their feedback in a personalized Google Sheet. To achieve this functionality, the app requires access to the following sensitive scopes:
+
+https://www.googleapis.com/auth/spreadsheets:
+
+This scope is essential for the app to append user-submitted meal ratings, timestamps, and email addresses to a specific Google Sheet provided by the user.
+The purpose of this access is to:
+Allow users to store their ratings securely in their Google Drive, ensuring they retain full control over their data.
+Avoid the need for external storage, which enhances user data security and privacy.
+Without this scope, the app cannot interact with the user’s spreadsheet, which is a core feature of the app.
+https://www.googleapis.com/auth/userinfo.email:
+
+This scope is required to retrieve the authenticated user’s email address after they sign in using Google.
+The email address is appended to the ratings dataset as a fourth column in the Google Sheet. This enables:
+Personalized Identification: Helps users distinguish their ratings if multiple individuals use the same Google Sheet.
+Transparency: Allows users to track and verify their ratings within the dataset.
+How the App Protects User Data
+
+OAuth2 Security:
+
+The app uses OAuth2 authentication to securely request and access only the necessary permissions.
+Users are explicitly informed about the required scopes and the purpose of their usage.
+Limited Scope Usage:
+
+The app only requests the above-mentioned scopes, which are directly tied to its functionality. No additional or unrelated user data is accessed.
+No Data Retention:
+
+The app does not store or process user data on external servers. All ratings are securely saved directly in the user’s Google Sheet, ensuring data privacy.
+How Users Benefit
+
+Transparency:
+Users know their data is stored exclusively in their own Google account.
+Control:
+Users can revoke access anytime via their Google Account settings.
+Personalization:
+Including the email address ensures users can track their own ratings if sharing the sheet with others.
+Conclusion
+
+The requested scopes (spreadsheets and userinfo.email) are critical for the app’s core functionality. These permissions are used strictly to enhance the user experience, ensure data security, and provide transparency and control. We are committed to maintaining compliance with Google’s data usage policies and respecting user privacy.
+
+If you need further clarification or examples of the app’s workflow, feel free to reach out. Thank you for reviewing this request.

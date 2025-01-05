@@ -23,7 +23,7 @@ async function initializeGapiClient() {
 function gisLoaded() {
   tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: CLIENT_ID,
-    scope: "https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/userinfo.email",
+    scope: "https://www.googleapis.com/auth/userinfo.email",
     callback: "", // Will be set dynamically
   });
   gisInited = true;

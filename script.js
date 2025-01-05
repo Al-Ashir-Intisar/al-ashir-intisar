@@ -52,11 +52,44 @@ function createRatingOptions(menuData) {
   });
 }
 
+// Replace these constants with your values
+const API_KEY = "AIzaSyCzFiz84aaMQIl-AEUPdI8NC1mFtsCRPXc";
+const SPREADSHEET_ID = "11Oks2e6aCiWezsOdhXyXoHccOheP80gottTouZ_LfIg"; // Replace with your Spreadsheet ID
+const SHEET_NAME = "ratings"; // Replace with your sheet name (default: Sheet1)
+
+function appendToSheet(meal, rating) {
+  const timestamp = new Date().toISOString();
+  const values = [[meal, rating, timestamp]];
+
+  console.time("Append Time");
+
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}!A1:append?valueInputOption=USER_ENTERED&key=${API_KEY}`;
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ values }),
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.timeEnd("Append Time");
+      console.log("Data appended successfully:", data);
+    })
+    .catch(error => {
+      console.timeEnd("Append Time");
+      console.error("Error appending data:", error);
+    });
+}
+
+// Example usage (call this function when submitting a rating)
 function submitRating(meal) {
   const rating = document.getElementById(`rating-${meal}`).value;
   if (rating) {
-    alert(`Thank you for rating ${meal} with ${rating} stars!`);
+    appendToSheet(meal, rating);
   } else {
-    alert('Please select a rating.');
+    alert("Please select a rating.");
   }
 }
+

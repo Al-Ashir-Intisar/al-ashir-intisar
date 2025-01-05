@@ -2,13 +2,13 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: #f4f4f9;
-    color: #333;
+    background: #000000;
+    color: #645413;
   }
   
   header {
-    background: #4CAF50;
-    color: white;
+    background: #ffc400;
+    color: rgb(0, 0, 0);
     text-align: center;
     padding: 1em 0;
   }
@@ -53,7 +53,7 @@ body {
   
   footer {
     text-align: center;
-    background: #4CAF50;
+    background: #ffce09;
     color: white;
     padding: 1em 0;
     position: relative;

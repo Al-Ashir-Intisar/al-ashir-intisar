@@ -1,6 +1,6 @@
 // Google API configuration
-const CLIENT_ID = "965317836494-18jk5m5lhroud6so3uqe5e3gg9pbk5rg.apps.googleusercontent.com"; // From your credentials file
-const SPREADSHEET_ID = "11Oks2e6aCiWezsOdhXyXoHccOheP80gottTouZ_LfIg";
+const CLIENT_ID = "965317836494-18jk5m5lhroud6so3uqe5e3gg9pbk5rg.apps.googleusercontent.com"; // Replace with your client ID
+const SPREADSHEET_ID = "11Oks2e6aCiWezsOdhXyXoHccOheP80gottTouZ_LfIg"; // Replace with your Spreadsheet ID
 const SHEET_NAME = "ratings";
 
 let tokenClient;
@@ -49,10 +49,10 @@ async function fetchUserEmail() {
   }
 }
 
-// Append data to the sheet
-async function appendToSheet(meal, rating) {
+// Append data to the Google Sheet
+async function appendToSheet(meal, foodItem, rating) {
   const timestamp = new Date().toISOString();
-  const values = [[meal, rating, timestamp, userEmail]]; // Add email as the fourth column
+  const values = [[meal, foodItem, rating, timestamp, userEmail]]; // Five columns
 
   try {
     const response = await gapi.client.sheets.spreadsheets.values.append({
@@ -65,17 +65,20 @@ async function appendToSheet(meal, rating) {
       },
     });
     console.log("Data appended successfully:", response);
+    alert(`Rating for ${foodItem} (${meal}) submitted successfully!`);
   } catch (error) {
     console.error("Error appending data:", error);
+    alert("Failed to submit rating. Please try again.");
   }
 }
 
-// Submit rating with authorization
+// Submit rating with meal, food item, rating, timestamp, and email
 function submitRating(meal) {
+  const foodItem = document.getElementById(`food-item-${meal}`).value;
   const rating = document.getElementById(`rating-${meal}`).value;
 
-  if (!rating) {
-    alert("Please select a rating.");
+  if (!foodItem || !rating) {
+    alert("Please select a food item and rating.");
     return;
   }
 
@@ -91,13 +94,13 @@ function submitRating(meal) {
     console.log("Authorization successful. Fetching user email...");
     await fetchUserEmail();
     console.log("Submitting rating...");
-    await appendToSheet(meal, rating);
+    await appendToSheet(meal, foodItem, rating);
   };
 
   if (gapi.client.getToken() === null) {
     tokenClient.requestAccessToken({ prompt: "consent" });
   } else {
-    fetchUserEmail().then(() => appendToSheet(meal, rating));
+    tokenClient.callback();
   }
 }
 
@@ -116,56 +119,63 @@ function loadLibraries() {
 
 loadLibraries();
 
-// Populate menu and create rating options (unchanged logic)
-fetch('menu.csv')
-  .then(response => response.text())
+// Fetch and populate menu using meal_data.json
+fetch('meal_data.json')
+  .then(response => response.json())
   .then(data => {
-    const rows = data.split('\n').slice(1); // Skip header
-    const menuData = rows.map(row => {
-      const [meal, category, item] = row.split(',');
-      return { meal, category, item };
-    });
-
-    populateMenu(menuData);
-    createRatingOptions(menuData);
+    populateMenu(data);
+    createRatingOptions(data);
   });
 
 function populateMenu(menuData) {
   const menuContainer = document.getElementById('menu-container');
-  const meals = ['breakfast', 'lunch', 'dinner'];
 
-  meals.forEach(meal => {
-    const mealItems = menuData.filter(item => item.meal === meal);
+  menuData.forEach(entry => {
     const mealDiv = document.createElement('div');
-    mealDiv.classList.add('card');
-    mealDiv.innerHTML = `<h3>${meal.toUpperCase()}</h3>`;
-    mealItems.forEach(item => {
-      mealDiv.innerHTML += `<p>${item.item}</p>`;
+    mealDiv.classList.add('meal-section');
+
+    const mealHeader = document.createElement('h3');
+    mealHeader.innerText = entry.Meal.toUpperCase();
+
+    const dropdown = document.createElement('select');
+    dropdown.id = `food-item-${entry.Meal}`;
+    dropdown.innerHTML = `<option value="" disabled selected>Select Food Item</option>`;
+
+    const foodItems = entry.Food_Items.split(', ');
+    foodItems.forEach(item => {
+      const option = document.createElement('option');
+      option.value = item;
+      option.innerText = item;
+      dropdown.appendChild(option);
     });
+
+    mealDiv.appendChild(mealHeader);
+    mealDiv.appendChild(dropdown);
     menuContainer.appendChild(mealDiv);
   });
 }
 
 function createRatingOptions(menuData) {
   const ratingContainer = document.getElementById('rating-container');
-  const meals = [...new Set(menuData.map(item => item.meal))];
 
-  meals.forEach(meal => {
+  menuData.forEach(entry => {
     const ratingDiv = document.createElement('div');
     ratingDiv.classList.add('card');
+
     ratingDiv.innerHTML = `
-      <h3>${meal.toUpperCase()}</h3>
-      <label for="rating-${meal}">Rate (1-5): </label>
-      <select id="rating-${meal}">
-        <option value="" disabled selected>Select</option>
+      <h3>${entry.Meal.toUpperCase()}</h3>
+      <label for="rating-${entry.Meal}">Rate (1-5): </label>
+      <select id="rating-${entry.Meal}">
+        <option value="" disabled selected>Select Rating</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
         <option value="4">4</option>
         <option value="5">5</option>
       </select>
-      <button onclick="submitRating('${meal}')">Submit</button>
+      <button onclick="submitRating('${entry.Meal}')">Submit</button>
     `;
+
     ratingContainer.appendChild(ratingDiv);
   });
 }

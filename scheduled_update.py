@@ -3,8 +3,6 @@ import subprocess
 import os
 from datetime import datetime
 
-# File paths
-# credentials_file = r"C:\Users\iamin\OneDrive\Documents\Academic\Coursera\ShouldIGo Website Project\credentials.txt"
 
 # Prompt the user for the credentials file path
 credentials_file = input("Enter the full path to the credentials file: ").strip()
@@ -26,7 +24,7 @@ def read_credentials():
 # Function to wait until 6:00 AM
 def wait_until_6am():
     print("Waiting until 6:00 AM...")
-    target_time = "03:41:00"
+    target_time = "06:00:00"
     while True:
         current_time = datetime.now().strftime("%H:%M:%S")
         if current_time >= target_time:

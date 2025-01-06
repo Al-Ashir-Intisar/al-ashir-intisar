@@ -6,6 +6,7 @@ from datetime import datetime
 
 # Prompt the user for the credentials file path
 credentials_file = input("Enter the full path to the credentials file: ").strip()
+target_time = input("Enter what time you want to run the update files for updated menu (HH:MM:SS): ")
 
 # Validate the file path
 if not os.path.exists(credentials_file):
@@ -23,14 +24,14 @@ def read_credentials():
 
 # Function to wait until 6:00 AM
 def wait_until_6am():
-    print("Waiting until 6:00 AM...")
-    target_time = "06:00:00"
+    print("Waiting until ", target_time, " ...")
+    #target_time = "06:00:00"
     while True:
         current_time = datetime.now().strftime("%H:%M:%S")
         if current_time >= target_time:
-            print("It's 6:00 AM. Proceeding with execution...")
+            print("It's ", target_time, "Proceeding with execution...")
             break
-        time.sleep(1)  # Check every second
+        time.sleep(30)  # Check every 30 seconds
 
 # Function to run the Python scripts with inputs from credentials
 def run_python_scripts(credentials):

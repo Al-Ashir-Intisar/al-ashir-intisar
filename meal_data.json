@@ -1,14 +1,14 @@
 [
     {
         "Meal": "Breakfast",
-        "Food_Items": "Yogurt Bar"
+        "Food_Items": "Chocolate Chip Buttermilk Pancakes"
     },
     {
-        "Meal": "Brunch",
-        "Food_Items": "Kornder Farms Beef Burger, Herb Roasted Chicken Breast, Malibu Burger, Fries, Buttermilk Biscuits and Sausage Gravy, Buttermilk Biscuits and Vegetable Sausage Gravy, House-Made Marinara, Creamy Garlic Alfredo, Pepperoni, Sausage, Cheese"
+        "Meal": "Lunch",
+        "Food_Items": "Unstuffed Cabbage, Vegetable Tortilla, Halal Beef Picadillo, Halal Achiote Chicken Thigh, Black Beans, Cilantro Pesto Rice, Sticky Braised Artichoke Bahn Mi Sandwich, Spinach and Artichoke Baked Penne, Chicken Shawarma, Sticky Halal Bourbon Chicken, Sticky Bourbon Minn-Tofu, White Rice, Brown Rice, Wok Charred Vegetable, Arrabiata Tomato Sauce, Roasted Seasonal Vegetable, Roasted Vegetable and Pesto, Five Cheese Blend, Feta, Banana Cake, Butterscotch Parfait, Pineapple Upside Down Cake, Snickerdoodle Cheesecake Bar"
     },
     {
         "Meal": "Dinner",
-        "Food_Items": "Al Pastor Pork, Chicken Mole, Adobo Lentils, White Rice, Brown Rice, Kornder Farms Beef Burger, Herb Roasted Chicken Breast, Malibu Burger, Fries, Chicken Caprese, Pumpkin Chickpea Dahl, Fischer Farms Char Sui Pork Belly, Minn-Tofu Char Sui, Vegetable Fried Rice, Wok Charred Chinese Broccoli, House-Made Marinara, Creamy Garlic Alfredo, Roasted Seasonal Vegetables, Pepperoni, Sausage, Cheese, Grasshopper Cake, Banana Cream Pie Parfait, Boston Cream Cake, Kit Kat Blondie Bar"
+        "Food_Items": "Unstuffed Cabbage, Vegetable Tortilla, Halal Beef Picadillo, Halal Achiote Chicken Thigh, Black Beans, Cilantro Pesto Rice, Sticky Braised Artichoke Bahn Mi Sandwich, Lamb & Beef Gyro, Vegetable Paella, Sticky Halal Bourbon Chicken, Sticky Bourbon Minn-Tofu, White Rice, Brown Rice, Wok Charred Vegetable, Arrabiata Tomato Sauce, Roasted Seasonal Vegetable, Roasted Vegetable and Pesto, Five Cheese Blend, Feta, Banana Cake, Butterscotch Parfait, Pineapple Upside Down Cake, Snickerdoodle Cheesecake Bar"
     }
 ]

@@ -4,7 +4,15 @@ import os
 from datetime import datetime
 
 # File paths
-credentials_file = r"C:\Users\iamin\OneDrive\Documents\Academic\Coursera\ShouldIGo Website Project\credentials.txt"
+# credentials_file = r"C:\Users\iamin\OneDrive\Documents\Academic\Coursera\ShouldIGo Website Project\credentials.txt"
+
+# Prompt the user for the credentials file path
+credentials_file = input("Enter the full path to the credentials file: ").strip()
+
+# Validate the file path
+if not os.path.exists(credentials_file):
+    print("The file path provided does not exist. Please check and try again.")
+    exit(1)  # Exit the script if the file path is invalid
 
 # Function to read credentials from the credentials.txt file
 def read_credentials():
@@ -13,7 +21,6 @@ def read_credentials():
         for line in file:
             key, value = line.split(":", 1)
             credentials[key.strip()] = value.strip()
-    print(credentials)
     return credentials
 
 # Function to wait until 6:00 AM
@@ -32,7 +39,7 @@ def run_python_scripts(credentials):
     print("Running Python scripts...")
     try:
         # Run get_email.py with inputs from credentials
-        print("Running the first script...")
+        print("\nRunning the first script...")
         subprocess.run(
             ["python", "get_email.py"],
             input=f"{credentials['Gmail Address']}\n{credentials['Gmail App Password']}\n",
@@ -41,7 +48,7 @@ def run_python_scripts(credentials):
         )
 
         # Run extract_menu.py with the OpenAI API key
-        print("Running the second script...")
+        print("\nRunning the second script...")
         subprocess.run(
             ["python", "extract_menu.py"],
             input=f"{credentials['OpenAI API secret key']}\n",

@@ -19,7 +19,7 @@ def read_credentials():
 # Function to wait until 6:00 AM
 def wait_until_6am():
     print("Waiting until 6:00 AM...")
-    target_time = "03:35:00"
+    target_time = "03:41:00"
     while True:
         current_time = datetime.now().strftime("%H:%M:%S")
         if current_time >= target_time:

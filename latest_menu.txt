@@ -1,15 +1,12 @@
 ```json
 [
-  {
-    "Meal": "Breakfast",
-    "Food_Items": "Yogurt Bar"
-  },
-  {
-    "Meal": "Brunch",
+  { "Meal": "Breakfast", "Food_Items": "Yogurt Bar" },
+  { 
+    "Meal": "Brunch", 
     "Food_Items": "Kornder Farms Beef Burger, Herb Roasted Chicken Breast, Malibu Burger, Fries, Buttermilk Biscuits and Sausage Gravy, Buttermilk Biscuits and Vegetable Sausage Gravy, House-made Marinara, Creamy Garlic Alfredo, Pepperoni, Sausage, Cheese"
   },
-  {
-    "Meal": "Dinner",
+  { 
+    "Meal": "Dinner", 
     "Food_Items": "Al Pastor Pork, Chicken Mole, Adobo Lentils, White Rice, Brown Rice, Kornder Farms Beef Burger, Herb Roasted Chicken Breast, Malibu Burger, Fries, Chicken Caprese, Pumpkin Chickpea Dahl, Fischer Farms Char Sui Pork Belly, Minn-Tofu Char Sui, Vegetable Fried Rice, Wok Charred Chinese Broccoli, House-made Marinara, Creamy Garlic Alfredo, Roasted Seasonal Vegetables, Pepperoni, Sausage, Cheese, Grasshopper Cake, Banana Cream Pie Parfait, Boston Cream Cake, Kit Kat Blondie Bar"
   }
 ]

@@ -2,10 +2,12 @@ from imapclient import IMAPClient
 import email
 from email.header import decode_header
 import getpass  # For secure password input
+import sys
 
 # Prompt for email and password
 EMAIL = input("Enter your Gmail address: ")
-PASSWORD = getpass.getpass("Enter your Gmail password or app password: ")
+# Check if the password is passed as a command-line argument
+PASSWORD = input("Enter your Gmail password or app password: ")
 
 SERVER = 'imap.gmail.com'
 

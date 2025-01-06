@@ -18,6 +18,7 @@ async function initializeGapiClient() {
   });
   gapiInited = true;
   maybeEnableButtons();
+  fetchRatings();
 }
 
 function gisLoaded() {
@@ -181,4 +182,61 @@ function createRatingOptions(menuData) {
 
     ratingContainer.appendChild(ratingDiv);
   });
+}
+
+async function fetchRatings() {
+  const API_KEY = "AIzaSyAju6jQzyeYW3PBxnOOhaEpFktwiPQoh_E";
+  const SHEET_ID = "11Oks2e6aCiWezsOdhXyXoHccOheP80gottTouZ_LfIg";
+
+  // Define meal types and their corresponding sheet ranges
+  const mealSheets = {
+    BREAKFAST: "breakfast_ratings!F:F",
+    BRUNCH: "brunch_ratings!F:F",
+    LUNCH: "lunch_ratings!F:F",
+    DINNER: "dinner_ratings!F:F",
+  };
+
+  const ratingContainer = document.getElementById("rating-container");
+
+  // Helper function to fetch data and update DOM
+  async function fetchAndUpdateMealRating(meal, range) {
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data.values && data.values.length > 0) {
+        const rawValue = data.values[0][0]; // Access the first row and first column
+        const ratingValue = parseFloat(rawValue).toFixed(2);
+
+        console.log(`${meal} - Rating fetched:`, ratingValue);
+
+        // Find and update the corresponding card
+        const ratingCard = Array.from(ratingContainer.getElementsByClassName("card"))
+          .find(card => card.querySelector("h3")?.textContent === meal);
+
+        if (ratingCard) {
+          const heading = ratingCard.querySelector("h3");
+          if (heading) {
+            heading.textContent = `${meal} - Rating: ${ratingValue}/5`;
+          }
+        } else {
+          console.warn(`No card found for ${meal}.`);
+        }
+      } else {
+        console.warn(`No data found in the 6th column for ${meal}.`);
+      }
+    } catch (error) {
+      console.error(`Error fetching ratings for ${meal}:`, error);
+    }
+  }
+
+  // Loop through each meal and fetch its ratings
+  for (const [meal, range] of Object.entries(mealSheets)) {
+    await fetchAndUpdateMealRating(meal, range);
+  }
 }

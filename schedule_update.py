@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 
 # Set the target time to 6:00 AM
-target_time = "02:30:00"
+target_time = "03:20:00"
 
 # Function to wait until 6:00 AM
 def wait_until_6am():
@@ -14,7 +14,7 @@ def wait_until_6am():
         if current_time >= target_time:
             print("It's 6:00 AM. Proceeding with execution...")
             break
-        time.sleep(10)  # Check every second
+        time.sleep(5)  # Check every second
 
 # Function to run Python scripts
 def run_python_scripts():

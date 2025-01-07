@@ -1,16 +1,16 @@
 ```json
 [
-  {
-    "Meal": "Breakfast",
-    "Food_Items": "Chocolate Chip Buttermilk Pancakes"
+  { 
+    "Meal": "Breakfast", 
+    "Food_Items": "Country Vegetable Scramble, Triple Berry & Chai Seed Smoothie"
   },
-  {
-    "Meal": "Lunch",
-    "Food_Items": "Unstuffed Cabbage, Vegetable Tortilla, Halal Beef Picadillo, Halal Achiote Chicken Thigh, Black Beans, Cilantro Pesto Rice, Sticky Braised Artichoke Bahn Mi Sandwich, Spinach and Artichoke Baked Penne, Chicken Shawarma, Sticky Halal Bourbon Chicken, Sticky Bourbon Minn-Tofu, White Rice, Brown Rice, Wok Charred Vegetable, Arrabiata Tomato Sauce, Roasted Seasonal Vegetable, Roasted Vegetable and Pesto, Five Cheese Blend, Feta, Banana Cake, Butterscotch Parfait, Pineapple Upside Down Cake, Snickerdoodle Cheesecake Bar"
+  { 
+    "Meal": "Lunch", 
+    "Food_Items": "Halal Beef Picadillo, Halal Achiote Chicken Thigh, Black Beans, Cilantro Pesto Rice, Kornder Farms Pub Burger, Tequila Lime Roasted Chicken Thigh, Smoked Red Bean Jambalaya, Lemongrass Ginger Shrimp, Lemongrass Ginger Minn-Tofu, White Rice, Brown Rice, White Cheddar Mac and Cheese, Roasted Seasonal Vegetable, Eggplant Parmigiano, Banana Cake, Butterscotch Parfait, Pineapple Upside Down Cake, Snickerdoodle Cheesecake Bar"
   },
-  {
-    "Meal": "Dinner",
-    "Food_Items": "Unstuffed Cabbage, Vegetable Tortilla, Halal Beef Picadillo, Halal Achiote Chicken Thigh, Black Beans, Cilantro Pesto Rice, Sticky Braised Artichoke Bahn Mi Sandwich, Lamb & Beef Gyro, Vegetable Paella, Sticky Halal Bourbon Chicken, Sticky Bourbon Minn-Tofu, White Rice, Brown Rice, Wok Charred Vegetable, Arrabiata Tomato Sauce, Roasted Seasonal Vegetable, Roasted Vegetable and Pesto, Five Cheese Blend, Feta, Banana Cake, Butterscotch Parfait, Pineapple Upside Down Cake, Snickerdoodle Cheesecake Bar"
+  { 
+    "Meal": "Dinner", 
+    "Food_Items": "Halal Beef Picadillo, Halal Achiote Chicken Thigh, Black Beans, Cilantro Pesto Rice, Kornder Farms Pub Burger, Shepards Pie, Singapore Style Street Noodle, Lemongrass Ginger Shrimp, Lemongrass Ginger Minn-Tofu, White Rice, Brown Rice, White Cheddar Mac and Cheese, Roasted Seasonal Vegetable, Eggplant Parmigiano, Banana Cake, Butterscotch Parfait, Pineapple Upside Down Cake, Snickerdoodle Cheesecake Bar"
   }
 ]
 ```

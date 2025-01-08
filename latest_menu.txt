@@ -2,15 +2,15 @@
 [
   {
     "Meal": "Breakfast",
-    "Food_Items": "Country Vegetable Scramble, Triple Berry & Chai Seed Smoothie"
+    "Food_Items": "Banana Cinnamon French Toast"
   },
   {
     "Meal": "Lunch",
-    "Food_Items": "Halal Beef Picadillo, Halal Achiote Chicken Thigh, Black Beans, Cilantro Pesto Rice, Kornder Farms Pub Burger, Tequila Lime Roasted Chicken Thigh, Smoked Red Bean Jambalaya, Lemongrass Ginger Shrimp, Lemongrass Ginger Minn-Tofu, White Rice, Brown Rice, White Cheddar Mac and Cheese, Roasted Seasonal Vegetable, Eggplant Parmigiano, Banana Cake, Butterscotch Parfait, Pineapple Upside Down Cake, Snickerdoodle Cheesecake Bar"
+    "Food_Items": "Ham and Split Pea, Curried Butternut Squash & Coconut, Halal Beef Picadillo, Halal Achiote Chicken Thigh, Black Beans, Cilantro Pesto Rice, Ferndale Market Sofrito Turkey Burger, Peking Style Roasted Chicken Wings, Mushroom Birria Tacos, Tempura Sesame Orange Chicken, Sesame Orange Minn-Tofu, White Rice, Brown Rice, Ratatouille Cavatappi, Roasted Seasonal Vegetable, Chicken, Bacon, Ranch, Five Cheese Blend, Fudge Brownies, Apple Slab Pie, Strawberry Mango Jell-O, S'Mores Bars"
   },
   {
     "Meal": "Dinner",
-    "Food_Items": "Halal Beef Picadillo, Halal Achiote Chicken Thigh, Black Beans, Cilantro Pesto Rice, Kornder Farms Pub Burger, Shepards Pie, Singapore Style Street Noodle, Lemongrass Ginger Shrimp, Lemongrass Ginger Minn-Tofu, White Rice, Brown Rice, White Cheddar Mac and Cheese, Roasted Seasonal Vegetable, Eggplant Parmigiano, Banana Cake, Butterscotch Parfait, Pineapple Upside Down Cake, Snickerdoodle Cheesecake Bar"
+    "Food_Items": "Ham and Split Pea, Curried Butternut Squash & Coconut, Halal Beef Picadillo, Halal Achiote Chicken Thigh, Black Beans, Cilantro Pesto Rice, Ferndale Market Sofrito Turkey Burger, Burgandy Braised Beef, Fischer Farms Smothered Pork Chop, Tempura Sesame Orange Chicken, Sesame Orange Minn-Tofu, White Rice, Brown Rice, Ratatouille Cavatappi, Roasted Seasonal Vegetable, Chicken, Bacon, Ranch, Five Cheese Blend, Fudge Brownies, Apple Slab Pie, Strawberry Mango Jell-O, S'Mores Bars"
   }
 ]
 ```

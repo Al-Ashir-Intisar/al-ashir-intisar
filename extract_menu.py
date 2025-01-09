@@ -17,9 +17,9 @@ with open("latest_email.txt", "r", encoding="utf-8") as file:
 prompt = f"""
 Extract the menu from the following email text and structure it similar ot this JSON format (include all the items in the email):
 [
-  {{ "Meal": "Breakfast", "Food_Items": "Yogurt Bar"... }},
-  {{ "Meal": "Brunch", "Food_Items": "Kornder Farms Beef Burger"... }},
-  {{ "Meal": "Dinner", "Food_Items": "Al Pastor Pork, Chicken Mole"... }}
+  {{ "Meal": "Breakfast", "Food_Items": "BANANA CINNAMON FRENCH TOAST @​breakfastfeature"... }},
+  {{ "Meal": "Brunch", "Food_Items": "HAM AND SPLIT PEA @​warm&soulful, CURRIED BUTTERNUT SQUASH & COCONUT @​warm&soulful"... }},
+  {{ "Meal": "Dinner", "Food_Items": "SESAME ORANGE MINN-TOFU @​near&far, TEMPURA SESAME ORANGE CHICKEN @​near&far"... }}
 ]
 Email text:
 {email_content}

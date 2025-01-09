@@ -1,16 +1,7 @@
 ```json
 [
-  {
-    "Meal": "Breakfast",
-    "Food_Items": "Banana Cinnamon French Toast"
-  },
-  {
-    "Meal": "Lunch",
-    "Food_Items": "Ham and Split Pea, Curried Butternut Squash & Coconut, Halal Beef Picadillo, Halal Achiote Chicken Thigh, Black Beans, Cilantro Pesto Rice, Ferndale Market Sofrito Turkey Burger, Peking Style Roasted Chicken Wings, Mushroom Birria Tacos, Tempura Sesame Orange Chicken, Sesame Orange Minn-Tofu, White Rice, Brown Rice, Ratatouille Cavatappi, Roasted Seasonal Vegetable, Chicken, Bacon, Ranch, Five Cheese Blend, Fudge Brownies, Apple Slab Pie, Strawberry Mango Jell-O, S'mores Bars"
-  },
-  {
-    "Meal": "Dinner",
-    "Food_Items": "Ham and Split Pea, Curried Butternut Squash & Coconut, Halal Beef Picadillo, Halal Achiote Chicken Thigh, Black Beans, Cilantro Pesto Rice, Ferndale Market Sofrito Turkey Burger, Burgundy Braised Beef, Fischer Farms Smothered Pork Chop, Tempura Sesame Orange Chicken, Sesame Orange Minn-Tofu, White Rice, Brown Rice, Ratatouille Cavatappi, Roasted Seasonal Vegetable, Chicken, Bacon, Ranch, Five Cheese Blend, Fudge Brownies, Apple Slab Pie, Strawberry Mango Jell-O, S'mores Bars"
-  }
+  { "Meal": "Breakfast", "Food_Items": "BANANA CINNAMON FRENCH TOAST @​breakfast feature" },
+  { "Meal": "Lunch", "Food_Items": "HAM AND SPLIT PEA @​warm & soulful, CURRIED BUTTERNUT SQUASH & COCONUT @​warm & soulful, HALAL BEEF PICADILLO @​bold & spicy, HALAL ACHIOTE CHICKEN THIGH @​bold & spicy, BLACK BEANS @​bold & spicy, CILANTRO PESTO RICE @​bold & spicy, FERNDALE MARKET SOFRITO TURKEY BURGER @​grate & griddle, PEKING STYLE ROASTED CHICKEN WINGS @​home & hearth, MUSHROOM BIRRIA TACOS @​SimplyOASIS, TEMPURA SESAME ORANGE CHICKEN @​near & far, SESAME ORANGE MINN-TOFU @​near & far, WHITE RICE @​near & far, BROWN RICE @​near & far, RATATOUILLE CAVATAPPI @​sauce, ROASTED SEASONAL VEGETABLE @​sauce, CHICKEN, BACON, RANCH, FIVE CHEESE BLEND @​stone, FUDGE BROWNIES @​butter & sugar, APPLE SLAB PIE @​butter & sugar, STRAWBERRY MANGO JELL-O @​butter & sugar, S'MORES BARS @​butter & sugar" },
+  { "Meal": "Dinner", "Food_Items": "HAM AND SPLIT PEA @​warm & soulful, CURRIED BUTTERNUT SQUASH & COCONUT @​warm & soulful, HALAL BEEF PICADILLO @​bold & spicy, HALAL ACHIOTE CHICKEN THIGH @​bold & spicy, BLACK BEANS @​bold & spicy, CILANTRO PESTO RICE @​bold & spicy, FERNDALE MARKET SOFRITO TURKEY BURGER @​grate & griddle, BURGANDY BRAISED BEEF @​home & hearth, FISCHER FARMS SMOTHERED PORK CHOP @​SimplyOASIS, TEMPURA SESAME ORANGE CHICKEN @​near & far, SESAME ORANGE MINN-TOFU @​near & far, WHITE RICE @​near & far, BROWN RICE @​near & far, RATATOUILLE CAVATAPPI @​sauce, ROASTED SEASONAL VEGETABLE @​sauce, CHICKEN, BACON, RANCH, FIVE CHEESE BLEND @​stone, FUDGE BROWNIES @​butter & sugar, APPLE SLAB PIE @​butter & sugar, STRAWBERRY MANGO JELL-O @​butter & sugar, S'MORES BARS @​butter & sugar" }
 ]
 ```

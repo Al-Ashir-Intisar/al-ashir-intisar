@@ -1,7 +1,16 @@
 ```json
 [
-  { "Meal": "Breakfast", "Food_Items": "BANANA CINNAMON FRENCH TOAST @​breakfast feature" },
-  { "Meal": "Lunch", "Food_Items": "HAM AND SPLIT PEA @​warm & soulful, CURRIED BUTTERNUT SQUASH & COCONUT @​warm & soulful, HALAL BEEF PICADILLO @​bold & spicy, HALAL ACHIOTE CHICKEN THIGH @​bold & spicy, BLACK BEANS @​bold & spicy, CILANTRO PESTO RICE @​bold & spicy, FERNDALE MARKET SOFRITO TURKEY BURGER @​grate & griddle, PEKING STYLE ROASTED CHICKEN WINGS @​home & hearth, MUSHROOM BIRRIA TACOS @​SimplyOASIS, TEMPURA SESAME ORANGE CHICKEN @​near & far, SESAME ORANGE MINN-TOFU @​near & far, WHITE RICE @​near & far, BROWN RICE @​near & far, RATATOUILLE CAVATAPPI @​sauce, ROASTED SEASONAL VEGETABLE @​sauce, CHICKEN, BACON, RANCH, FIVE CHEESE BLEND @​stone, FUDGE BROWNIES @​butter & sugar, APPLE SLAB PIE @​butter & sugar, STRAWBERRY MANGO JELL-O @​butter & sugar, S'MORES BARS @​butter & sugar" },
-  { "Meal": "Dinner", "Food_Items": "HAM AND SPLIT PEA @​warm & soulful, CURRIED BUTTERNUT SQUASH & COCONUT @​warm & soulful, HALAL BEEF PICADILLO @​bold & spicy, HALAL ACHIOTE CHICKEN THIGH @​bold & spicy, BLACK BEANS @​bold & spicy, CILANTRO PESTO RICE @​bold & spicy, FERNDALE MARKET SOFRITO TURKEY BURGER @​grate & griddle, BURGANDY BRAISED BEEF @​home & hearth, FISCHER FARMS SMOTHERED PORK CHOP @​SimplyOASIS, TEMPURA SESAME ORANGE CHICKEN @​near & far, SESAME ORANGE MINN-TOFU @​near & far, WHITE RICE @​near & far, BROWN RICE @​near & far, RATATOUILLE CAVATAPPI @​sauce, ROASTED SEASONAL VEGETABLE @​sauce, CHICKEN, BACON, RANCH, FIVE CHEESE BLEND @​stone, FUDGE BROWNIES @​butter & sugar, APPLE SLAB PIE @​butter & sugar, STRAWBERRY MANGO JELL-O @​butter & sugar, S'MORES BARS @​butter & sugar" }
+  {
+    "Meal": "Breakfast",
+    "Food_Items": "VEGETABLE SAUSAGE, EGG AND CHEESE ENGLISH MUFFIN SANDWICH @breakfast feature, BACON, EGG AND CHEESE ENGLISH MUFFIN SANDWICH @breakfast feature"
+  },
+  {
+    "Meal": "Lunch",
+    "Food_Items": "SAVORY POTATO & LEEK @warm & soulful, CREAMY TOMATO BASIL @warm & soulful, HALAL BEEF PICADILLO @bold & spicy, HALAL ACHIOTE CHICKEN THIGH @bold & spicy, BLACK BEANS @bold & spicy, CILANTRO PESTO RICE @bold & spicy, STATE FAIR TURKEY CORNDOG @grate & griddle, MARGHERITA GRILLED CHEESE & CREAMY TOMATO BASIL BISQUE @home & hearth, BUTTERNUT SQUASH AND LENTIL DAHL @SimplyOASIS, CREOLE CHICKEN AND SAUSAGE DIRTY RICE @near & far, CAJUN-STYLE SIMMERED RED BEANS @near & far, CORNBREAD BISCUIT @near & far, SHRIMP FRA DIAVOLO @sauce, ROASTED SEASONAL VEGETABLE @sauce, JUMBO SALTED PRETZEL @stone, MANGO PASSION FRUIT PARFAIT @butter & sugar, CHOCOLATE MOUSSE PARFAIT @butter & sugar, STRAWBERRY JELL-O CAKE @butter & sugar, REVEL BARS @butter & sugar"
+  },
+  {
+    "Meal": "Dinner",
+    "Food_Items": "SAVORY POTATO & LEEK @warm & soulful, CREAMY TOMATO BASIL @warm & soulful, HALAL BEEF PICADILLO @bold & spicy, HALAL ACHIOTE CHICKEN THIGH @bold & spicy, BLACK BEANS @bold & spicy, CILANTRO PESTO RICE @bold & spicy, STATE FAIR TURKEY CORNDOG @grate & griddle, CHILI CON QUESO PORK BOWL @home & hearth, BUTTERNUT SQUASH AND LENTIL DAHL @SimplyOASIS, CREOLE CHICKEN AND SAUSAGE DIRTY RICE @near & far, CAJUN-STYLE SIMMERED RED BEANS @near & far, CORNBREAD BISCUIT @near & far, SHRIMP FRA DIAVOLO @sauce, ROASTED SEASONAL VEGETABLE @sauce, JUMBO SALTED PRETZEL @stone, MANGO PASSION FRUIT PARFAIT @butter & sugar, CHOCOLATE MOUSSE PARFAIT @butter & sugar, STRAWBERRY JELL-O CAKE @butter & sugar, REVEL BARS @butter & sugar"
+  }
 ]
 ```

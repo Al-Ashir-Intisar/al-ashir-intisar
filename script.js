@@ -53,7 +53,13 @@ async function fetchUserEmail() {
 // Append data to the Google Sheet
 async function appendToSheet(meal, foodItem, rating) {
   const timestamp = new Date().toISOString();
-  const values = [[meal, foodItem, rating, timestamp, userEmail]]; // Five columns
+
+  // Get the selected value from the suggestion dropdown
+  const suggestionDropdown = document.getElementById("suggestion-dropdown");
+  const selectedSuggestion = suggestionDropdown?.value || "No Suggestion"; // Default to "No Suggestion" if not selected
+
+  // Include the suggestion as the sixth column
+  const values = [[meal, foodItem, rating, timestamp, userEmail, selectedSuggestion]];
 
   try {
     const response = await gapi.client.sheets.spreadsheets.values.append({
@@ -66,12 +72,13 @@ async function appendToSheet(meal, foodItem, rating) {
       },
     });
     console.log("Data appended successfully:", response);
-    alert(`Rating for ${foodItem} (${meal}) submitted successfully!`);
+    alert(`Rating for ${foodItem} (${meal}) with suggestion "${selectedSuggestion}" submitted successfully!`);
   } catch (error) {
     console.error("Error appending data:", error);
     alert("Failed to submit rating. Please try again.");
   }
 }
+
 
 // Submit rating with meal, food item, rating, timestamp, and email
 function submitRating(meal) {
@@ -158,6 +165,20 @@ function populateMenu(menuData) {
     mealDiv.appendChild(dropdown);
     menuContainer.appendChild(mealDiv);
   });
+
+  // Populate the dropdown menu with the suggestions
+  const suggestions = ["Under Cooked", "Over Cooked", "Dry", "No Flavor", "Too Spicy"];
+
+  const suggestionDropdown = document.getElementById("suggestion-dropdown");
+
+  // Dynamically populate the dropdown options
+  suggestions.forEach(suggestion => {
+    const option = document.createElement("option");
+    option.value = suggestion;
+    option.textContent = suggestion;
+    suggestionDropdown.appendChild(option);
+  });
+
 }
 
 function createRatingOptions(menuData) {

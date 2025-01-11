@@ -124,7 +124,7 @@ function loadLibraries() {
 loadLibraries();
 
 // Fetch and populate menu using meal_data.json
-fetch('meal_data.json')
+fetch('https://storage.googleapis.com/menu-buckets/updated-repo/meal_data.json')
   .then(response => response.json())
   .then(data => {
     populateMenu(data);

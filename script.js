@@ -167,7 +167,7 @@ function populateMenu(menuData) {
   });
 
   // Populate the dropdown menu with the suggestions
-  const suggestions = ["Under Cooked", "Over Cooked", "Dry", "No Flavor", "Too Spicy"];
+  const suggestions = ["Perfect", "Undercooked", "Overcooked/Burnt", "Dry", "No Flavor", "Too Salty", "Too Ssweet", "Too Spicy", "Too Greasy", "Not Fresh"];
 
   const suggestionDropdown = document.getElementById("suggestion-dropdown");
 

@@ -52,7 +52,20 @@ async function fetchUserEmail() {
 
 // Append data to the Google Sheet
 async function appendToSheet(meal, foodItem, rating) {
-  const timestamp = new Date().toISOString();
+  
+  const timestamp = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Chicago', // Time zone for Minnesota
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false, // Use 24-hour format
+  }).format(new Date());
+  
+  console.log(timestamp);
+  
 
   // Get the selected value from the suggestion dropdown
   const suggestionDropdown = document.getElementById("suggestion-dropdown");
@@ -212,112 +225,12 @@ async function fetchRatings() {
 
   // Define meal types and their corresponding sheet ranges
   const mealSheets = {
-    BREAKFAST: "breakfast_today!F:F",
-    BRUNCH: "brunch_today!F:F",
-    LUNCH: "lunch_today!F:F",
-    DINNER: "dinner_today!F:F",
+    BREAKFAST: "breakfast_today!G:G",
+    BRUNCH: "brunch_today!G:G",
+    LUNCH: "lunch_today!G:G",
+    DINNER: "dinner_today!G:G",
   };
 
-  const menuContainer = document.getElementById("menu-container");
-
-// Helper function to fetch data and update the meal header in the menu-container
-async function fetchAndUpdateMealRating(meal, range) {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
-
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    let ratingText = "No Ratings Yet"; // Default text if no rating is found
-
-    if (data.values && data.values.length > 0) {
-      const rawValue = data.values[0][0]; // Access the first row and first column
-      const ratingValue = parseFloat(rawValue).toFixed(2);
-      ratingText = `Rating: ${ratingValue}/5`;
-      console.log(`${meal} - Rating fetched:`, ratingValue);
-    } else {
-      console.warn(`No data found in the 6th column for ${meal}.`);
-    }
-
-    // Find and update the corresponding mealDiv in the menu-container
-    const mealDiv = Array.from(menuContainer.getElementsByClassName("meal-section"))
-      .find(section => section.querySelector("h3")?.textContent.includes(meal));
-
-    if (mealDiv) {
-      const mealHeader = mealDiv.querySelector("h3");
-      if (mealHeader) {
-        mealHeader.textContent = `${meal.toUpperCase()} - ${ratingText}`;
-      }
-    } else {
-      console.warn(`No meal section found for ${meal}.`);
-    }
-  } catch (error) {
-    console.error(`Error fetching ratings for ${meal}:`, error);
-
-    // Handle errors by setting "No Ratings Yet"
-    const mealDiv = Array.from(menuContainer.getElementsByClassName("meal-section"))
-      .find(section => section.querySelector("h3")?.textContent.includes(meal));
-
-    if (mealDiv) {
-      const mealHeader = mealDiv.querySelector("h3");
-      if (mealHeader) {
-        mealHeader.textContent = `${meal.toUpperCase()} - No Ratings Yet`;
-      }
-    }
-  }
-}
-// Helper function to fetch data and update the meal header in the menu-container
-async function fetchAndUpdateMealRating(meal, range) {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
-
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    let ratingText = "No Ratings Yet"; // Default text if no rating is found
-
-    if (data.values && data.values.length > 0) {
-      const rawValue = data.values[0][0]; // Access the first row and first column
-      const ratingValue = parseFloat(rawValue).toFixed(2);
-      ratingText = `Rating: ${ratingValue}/5`;
-      console.log(`${meal} - Rating fetched:`, ratingValue);
-    } else {
-      console.warn(`No data found in the 6th column for ${meal}.`);
-    }
-
-    // Find and update the corresponding mealDiv in the menu-container
-    const mealDiv = Array.from(menuContainer.getElementsByClassName("meal-section"))
-      .find(section => section.querySelector("h3")?.textContent.includes(meal));
-
-    if (mealDiv) {
-      const mealHeader = mealDiv.querySelector("h3");
-      if (mealHeader) {
-        mealHeader.textContent = `${meal.toUpperCase()} - ${ratingText}`;
-      }
-    } else {
-      console.warn(`No meal section found for ${meal}.`);
-    }
-  } catch (error) {
-    console.error(`Error fetching ratings for ${meal}:`, error);
-
-    // Handle errors by setting "No Ratings Yet"
-    const mealDiv = Array.from(menuContainer.getElementsByClassName("meal-section"))
-      .find(section => section.querySelector("h3")?.textContent.includes(meal));
-
-    if (mealDiv) {
-      const mealHeader = mealDiv.querySelector("h3");
-      if (mealHeader) {
-        mealHeader.textContent = `${meal.toUpperCase()} - No Ratings Yet`;
-      }
-    }
-  }
-}
 // Helper function to fetch data and update the meal header in the menu-container
 async function fetchAndUpdateMealRating(meal, range) {
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;

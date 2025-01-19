@@ -57,7 +57,7 @@ function submitRating(meal) {
     .ref(`foodRatings/${currentDay}`)
     .push(foodRating)
     .then(() => {
-      alert(`Rating for ${foodItem} (${meal}) submitted successfully!`);
+      console.log(`Rating for ${foodItem} (${meal}) submitted successfully!`);
       window.location.reload(); // Reload the page to refresh data
     })
     .catch((error) => {

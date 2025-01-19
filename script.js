@@ -26,6 +26,7 @@ const currentDay = new Date()
   .map((part) => part.padStart(2, "0"))
   .reverse()
   .join("-");
+console.log("Current Day:", currentDay);
 
 // Function to submit a rating
 function submitRating(meal) {
@@ -75,6 +76,8 @@ function fetchRatings() {
     .once("value")
     .then((snapshot) => {
       const data = snapshot.val();
+      // Checking if data loaded properly from Firebase
+      console.log("Fetched ratings for today:", data);
       if (!data) {
         // If no ratings exist, update the UI with "No Ratings Yet"
         updateMenuRatings({
@@ -87,13 +90,16 @@ function fetchRatings() {
       }
 
       // Organize ratings by meal type
-      const mealRatings = { Breakfast: [], Brunch: [], Lunch: [], Dinner: [] };
+      const mealRatings = { BREAKFAST: [], BRUNCH: [], LUNCH: [], DINNER: [] };
 
       Object.values(data).forEach((entry) => {
         if (mealRatings[entry.Meal]) {
           mealRatings[entry.Meal].push(entry.Rating);
         }
       });
+
+      // Checking if mealRatings object is created properly
+      console.log("Meal Ratings:", mealRatings);
 
       // Calculate averages
       const averageRatings = {};

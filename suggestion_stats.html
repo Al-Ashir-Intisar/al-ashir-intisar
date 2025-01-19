@@ -58,9 +58,15 @@
   </head>
   <body>
     <h1>
-      Suggestion Statistics For
+      Suggestion Statistics
       <div id="date-box"></div>
     </h1>
+    <label for="time-range">Select Time Range: </label>
+    <select id="time-range">
+      <option value="today">Today</option>
+      <option value="7days">Last 7 Days</option>
+      <option value="30days">Last 30 Days</option>
+    </select>
     <button
       id="back-to-home-button"
       onclick="window.location.href='index.html';"

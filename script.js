@@ -186,11 +186,13 @@ function populateMenu(menuData) {
     "Overcooked/Burnt",
     "Dry",
     "No Flavor",
+    "Add Salt",
     "Too Salty",
     "Too Sweet",
     "Too Spicy",
     "Too Greasy",
     "Not Fresh",
+    "Soggy",
   ];
 
   const suggestionDropdown = document.getElementById("suggestion-dropdown");

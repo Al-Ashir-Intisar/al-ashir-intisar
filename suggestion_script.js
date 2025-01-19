@@ -45,24 +45,30 @@ putDate(stringCurrentDay);
 
 console.log("Current Day:", currentDay);
 
-// Fetch suggestions for the current day and process them
-function fetchSuggestionsForToday() {
-  firebase
-    .database()
-    .ref(`foodRatings/${currentDay}`)
-    .once("value")
-    .then((snapshot) => {
-      const data = snapshot.val();
-      if (!data) {
+// Function to fetch data based on the selected time range
+function fetchSuggestions(timeRange) {
+  const dateRefs = getDateRefs(timeRange);
+
+  const promises = dateRefs.map((date) =>
+    firebase.database().ref(`foodRatings/${date}`).once("value")
+  );
+
+  Promise.all(promises)
+    .then((snapshots) => {
+      const data = snapshots
+        .map((snapshot) => snapshot.val())
+        .filter((dayData) => dayData); // Filter out null values
+
+      if (data.length === 0) {
         displayNoData();
         return;
       }
 
-      // Process suggestions
-      const suggestionStats = processSuggestions(data);
+      const combinedStats = data.reduce((acc, dayData) => {
+        return mergeStats(acc, processSuggestions(dayData));
+      }, {});
 
-      // Render suggestions
-      renderSuggestions(suggestionStats);
+      renderSuggestions(combinedStats);
     })
     .catch((error) => {
       console.error("Error fetching suggestions:", error);
@@ -70,6 +76,50 @@ function fetchSuggestionsForToday() {
         "stats-container"
       ).innerHTML = `<p>Error loading suggestions. Please try again.</p>`;
     });
+}
+
+// Helper function to get date references for the given range
+function getDateRefs(range) {
+  const now = new Date();
+  const dates = [];
+
+  if (range === "today") {
+    dates.push(currentDay);
+  } else {
+    const days = range === "7days" ? 7 : 30;
+    for (let i = 0; i < days; i++) {
+      const date = new Date(now);
+      date.setDate(now.getDate() - i);
+      dates.push(
+        date
+          .toLocaleDateString("en-US", { timeZone: "America/Chicago" })
+          .split("/")
+          .map((part) => part.padStart(2, "0"))
+          .reverse()
+          .join("-")
+      );
+    }
+  }
+
+  return dates;
+}
+
+// Merge stats from multiple days
+function mergeStats(stats1, stats2) {
+  for (const meal in stats2) {
+    if (!stats1[meal]) stats1[meal] = {};
+
+    for (const foodItem in stats2[meal]) {
+      if (!stats1[meal][foodItem]) stats1[meal][foodItem] = {};
+
+      for (const suggestion in stats2[meal][foodItem]) {
+        stats1[meal][foodItem][suggestion] =
+          (stats1[meal][foodItem][suggestion] || 0) +
+          stats2[meal][foodItem][suggestion];
+      }
+    }
+  }
+  return stats1;
 }
 
 // Process suggestions and count them for each food item
@@ -140,8 +190,14 @@ function renderSuggestions(stats) {
 function displayNoData() {
   document.getElementById(
     "stats-container"
-  ).innerHTML = `<p>No suggestions available for today.</p>`;
+  ).innerHTML = `<p>No suggestions available for the selected time range.</p>`;
 }
 
-// Fetch suggestions on page load
-window.onload = fetchSuggestionsForToday;
+// Event listener for the dropdown menu
+document.getElementById("time-range").addEventListener("change", (event) => {
+  const selectedRange = event.target.value;
+  fetchSuggestions(selectedRange);
+});
+
+// Fetch suggestions for "Today" on page load
+window.onload = () => fetchSuggestions("today");

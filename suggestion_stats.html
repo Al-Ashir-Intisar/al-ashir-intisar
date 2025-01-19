@@ -12,9 +12,15 @@
         font-family: Arial, sans-serif;
         margin: 20px;
       }
+      header {
+        background: #ffc400;
+        color: rgb(0, 0, 0);
+        text-align: center;
+        padding: 1em 0;
+      }
       h1 {
         text-align: center;
-        color: #333;
+        color: #000000;
       }
       table {
         width: 100%;
@@ -28,18 +34,24 @@
         text-align: left;
       }
       th {
-        background-color: #f4f4f4;
+        background-color: #8f8f8f;
+      }
+      #back-to-home-button {
+        display: block;
+        margin: 0 auto; /* Centers the button horizontally */
+        cursor: pointer; /* Pointer on hover */
+        text-align: center; /* Align text in the center */
       }
     </style>
   </head>
   <body>
+    <h1>Suggestion Statistics for Today</h1>
     <button
-      id="privacy-policy-button"
+      id="back-to-home-button"
       onclick="window.location.href='index.html';"
     >
       Back to Home
     </button>
-    <h1>Suggestion Statistics for Today</h1>
     <div id="stats-container">
       <p>Loading suggestions...</p>
     </div>

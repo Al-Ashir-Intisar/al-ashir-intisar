@@ -27,6 +27,24 @@ const currentDay = new Date()
   .reverse()
   .join("-");
 
+// Get the current date formatted as MM/DD/YYYY
+const stringCurrentDay = new Date().toLocaleDateString("en-US", {
+  timeZone: "America/Chicago",
+});
+console.log(stringCurrentDay);
+
+function putDate(stringCurrentDay) {
+  const dateBox = document.getElementById("date-box");
+  console.log(stringCurrentDay);
+  // Setting the formatted date in the date box
+  dateBox.textContent = stringCurrentDay;
+}
+
+// Example usage
+putDate(stringCurrentDay);
+
+console.log("Current Day:", currentDay);
+
 // Fetch suggestions for the current day and process them
 function fetchSuggestionsForToday() {
   firebase

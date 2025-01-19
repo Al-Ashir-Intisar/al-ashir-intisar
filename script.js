@@ -1,99 +1,33 @@
-// Google API configuration
-const CLIENT_ID = "965317836494-18jk5m5lhroud6so3uqe5e3gg9pbk5rg.apps.googleusercontent.com"; // Replace with your client ID
-const SPREADSHEET_ID = "11Oks2e6aCiWezsOdhXyXoHccOheP80gottTouZ_LfIg"; // Replace with your Spreadsheet ID
-const SHEET_NAME = "ratings";
+// Your Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCUxGxY3NHz435sRnm-2WN4VMyJMYsf0S",
+  authDomain: "shouldigo-6237b.firebaseapp.com",
+  databaseURL: "https://shouldigo-6237b-default-rtdb.firebaseio.com",
+  projectId: "shouldigo-6237b",
+  storageBucket: "shouldigo-6237b.appspot.com",
+  messagingSenderId: "372060386218",
+  appId: "1:372060386218:web:04cef54a7ee8356c6af1d",
+  measurementId: "G-RR3QJKC7D",
+};
 
-let tokenClient;
-let gapiInited = false;
-let gisInited = false;
-let userEmail = null; // To store the user's email address
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
-function gapiLoaded() {
-  gapi.load("client", initializeGapiClient);
-}
+// Get a reference to the database
+const database = firebase.database();
 
-async function initializeGapiClient() {
-  await gapi.client.init({
-    discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
-  });
-  gapiInited = true;
-  maybeEnableButtons();
-  fetchRatings();
-}
+console.log("Firebase Initialized!");
 
-function gisLoaded() {
-  tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: CLIENT_ID,
-    scope: "https://www.googleapis.com/auth/userinfo.email",
-    callback: "", // Will be set dynamically
-  });
-  gisInited = true;
-  maybeEnableButtons();
-}
+// Automatically capture today's date in US Central Time in YYYY-MM-DD format
+const currentDay = new Date()
+  .toLocaleString("en-US", { timeZone: "America/Chicago" })
+  .split(",")[0]
+  .split("/")
+  .map((part) => part.padStart(2, "0"))
+  .reverse()
+  .join("-");
 
-function maybeEnableButtons() {
-  if (gapiInited && gisInited) {
-    console.log("Google APIs are ready.");
-  }
-}
-
-// Fetch user email after authentication
-async function fetchUserEmail() {
-  try {
-    const response = await gapi.client.request({
-      path: "https://www.googleapis.com/oauth2/v2/userinfo",
-    });
-    userEmail = response.result.email; // Store the user's email address
-    console.log("User email fetched:", userEmail);
-  } catch (error) {
-    console.error("Error fetching user email:", error);
-  }
-}
-
-// Append data to the Google Sheet
-async function appendToSheet(meal, foodItem, rating) {
-  
-  const timestamp = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/Chicago', // Time zone for Minnesota
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false, // Use 24-hour format
-  }).format(new Date());
-  
-  console.log(timestamp);
-  
-
-  // Get the selected value from the suggestion dropdown
-  const suggestionDropdown = document.getElementById("suggestion-dropdown");
-  const selectedSuggestion = suggestionDropdown?.value || "No Suggestion"; // Default to "No Suggestion" if not selected
-
-  // Include the suggestion as the sixth column
-  const values = [[meal, foodItem, rating, timestamp, userEmail, selectedSuggestion]];
-
-  try {
-    const response = await gapi.client.sheets.spreadsheets.values.append({
-      spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!A1`,
-      valueInputOption: "USER_ENTERED",
-      insertDataOption: "INSERT_ROWS",
-      resource: {
-        values: values,
-      },
-    });
-    console.log("Data appended successfully:", response);
-    alert(`Rating for ${foodItem} (${meal}) with suggestion "${selectedSuggestion}" submitted successfully!`);
-  } catch (error) {
-    console.error("Error appending data:", error);
-    alert("Failed to submit rating. Please try again.");
-  }
-}
-
-
-// Submit rating with meal, food item, rating, timestamp, and email
+// Function to submit a rating
 function submitRating(meal) {
   const foodItem = document.getElementById(`food-item-${meal}`).value;
   const rating = document.getElementById(`rating-${meal}`).value;
@@ -103,72 +37,138 @@ function submitRating(meal) {
     return;
   }
 
-  // Request authorization if needed
-  tokenClient.callback = async (resp) => {
-    if (resp.error) {
-      console.error(resp.error);
-      alert("Authorization failed. Please try again.");
-      return;
-    }
+  const timestamp = new Date().toLocaleString("en-US", {
+    timeZone: "America/Chicago",
+  });
+  const suggestionDropdown = document.getElementById("suggestion-dropdown");
+  const selectedSuggestion = suggestionDropdown?.value || "No Suggestion";
 
-    // Fetch the user's email and append the rating
-    console.log("Authorization successful. Fetching user email...");
-    await fetchUserEmail();
-    console.log("Submitting rating...");
-    await appendToSheet(meal, foodItem, rating);
-
-      // Reloading the window
-      window.location.reload();
+  const foodRating = {
+    Meal: meal,
+    FoodItem: foodItem,
+    Rating: parseInt(rating),
+    Timestamp: timestamp,
+    Suggestion: selectedSuggestion,
   };
 
-  if (gapi.client.getToken() === null) {
-    tokenClient.requestAccessToken({ prompt: "consent" });
-  } else {
-    tokenClient.callback();
+  // Store the rating in Firebase under the current date
+  firebase
+    .database()
+    .ref(`foodRatings/${currentDay}`)
+    .push(foodRating)
+    .then(() => {
+      alert(`Rating for ${foodItem} (${meal}) submitted successfully!`);
+      window.location.reload(); // Reload the page to refresh data
+    })
+    .catch((error) => {
+      console.error("Error submitting food rating:", error);
+      alert("Failed to submit rating. Please try again.");
+    });
+}
+
+// Fetch ratings for the current day and calculate averages
+function fetchRatings() {
+  // Fetch data for the current date
+  firebase
+    .database()
+    .ref(`foodRatings/${currentDay}`)
+    .once("value")
+    .then((snapshot) => {
+      const data = snapshot.val();
+      if (!data) {
+        // If no ratings exist, update the UI with "No Ratings Yet"
+        updateMenuRatings({
+          Breakfast: "No Ratings Yet",
+          Brunch: "No Ratings Yet",
+          Lunch: "No Ratings Yet",
+          Dinner: "No Ratings Yet",
+        });
+        return;
+      }
+
+      // Organize ratings by meal type
+      const mealRatings = { Breakfast: [], Brunch: [], Lunch: [], Dinner: [] };
+
+      Object.values(data).forEach((entry) => {
+        if (mealRatings[entry.Meal]) {
+          mealRatings[entry.Meal].push(entry.Rating);
+        }
+      });
+
+      // Calculate averages
+      const averageRatings = {};
+      for (const [meal, ratings] of Object.entries(mealRatings)) {
+        if (ratings.length > 0) {
+          const average =
+            ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+          averageRatings[meal] = `${ratings.length} Ratings: ${average.toFixed(
+            2
+          )}/5`;
+        } else {
+          averageRatings[meal] = "No Ratings Yet";
+        }
+      }
+
+      // Update the menu with the calculated averages
+      updateMenuRatings(averageRatings);
+    })
+    .catch((error) => {
+      console.error("Error fetching today's ratings:", error);
+      alert("An error occurred while fetching data.");
+    });
+}
+
+// Update the menu headers with ratings
+function updateMenuRatings(averageRatings) {
+  const menuContainer = document.getElementById("menu-container");
+
+  for (const [meal, ratingText] of Object.entries(averageRatings)) {
+    const mealDiv = Array.from(
+      menuContainer.getElementsByClassName("meal-section")
+    ).find((section) =>
+      section.querySelector("h3")?.textContent.includes(meal.toUpperCase())
+    );
+
+    if (mealDiv) {
+      const mealHeader = mealDiv.querySelector("h3");
+      if (mealHeader) {
+        mealHeader.textContent = `${meal.toUpperCase()}: ${ratingText}`;
+      }
+    } else {
+      console.warn(`Warning: No meal section found for ${meal}.`);
+    }
   }
 }
 
-// Load the libraries dynamically
-function loadLibraries() {
-  const gapiScript = document.createElement("script");
-  gapiScript.src = "https://apis.google.com/js/api.js";
-  gapiScript.onload = gapiLoaded;
-  document.body.appendChild(gapiScript);
-
-  const gisScript = document.createElement("script");
-  gisScript.src = "https://accounts.google.com/gsi/client";
-  gisScript.onload = gisLoaded;
-  document.body.appendChild(gisScript);
-}
-
-loadLibraries();
-
-// Fetch and populate menu using meal_data.json
-fetch('https://storage.googleapis.com/menu-buckets/updated-repo/meal_data.json')
-//fetch('meal_data.json')
-  .then(response => response.json())
-  .then(data => {
+// Populate the menu dynamically
+fetch("https://storage.googleapis.com/menu-buckets/updated-repo/meal_data.json")
+  .then((response) => response.json())
+  .then((data) => {
     populateMenu(data);
     createRatingOptions(data);
   });
 
 function populateMenu(menuData) {
-  const menuContainer = document.getElementById('menu-container');
+  const menuContainer = document.getElementById("menu-container");
+  const dateBox = document.getElementById("date-box");
+  console.log(menuData[0].Date);
+  // Getting the date from email date
+  dateBox.textContent = menuData[0].Date;
 
-  menuData.forEach(entry => {
-    const mealDiv = document.createElement('div');
-    mealDiv.classList.add('meal-section');
+  menuData.forEach((entry) => {
+    const mealDiv = document.createElement("div");
+    mealDiv.classList.add("meal-section");
 
-    const mealHeader = document.createElement('h3');
+    const mealHeader = document.createElement("h3");
     mealHeader.innerText = entry.Meal.toUpperCase();
 
-    const dropdown = document.createElement('select');
+    const dropdown = document.createElement("select");
     dropdown.id = `food-item-${entry.Meal}`;
     dropdown.innerHTML = `<option value="" disabled selected>Select Food Item</option>`;
 
-    const foodItems = entry.Food_Items.split(', ');
-    foodItems.forEach(item => {
-      const option = document.createElement('option');
+    const foodItems = entry.Food_Items.split(", ");
+    foodItems.forEach((item) => {
+      const option = document.createElement("option");
       option.value = item;
       option.innerText = item;
       dropdown.appendChild(option);
@@ -180,29 +180,38 @@ function populateMenu(menuData) {
   });
 
   // Populate the dropdown menu with the suggestions
-  const suggestions = ["Perfect", "Undercooked", "Overcooked/Burnt", "Dry", "No Flavor", "Too Salty", "Too Ssweet", "Too Spicy", "Too Greasy", "Not Fresh"];
+  const suggestions = [
+    "Perfect",
+    "Undercooked",
+    "Overcooked/Burnt",
+    "Dry",
+    "No Flavor",
+    "Too Salty",
+    "Too Sweet",
+    "Too Spicy",
+    "Too Greasy",
+    "Not Fresh",
+  ];
 
   const suggestionDropdown = document.getElementById("suggestion-dropdown");
 
-  // Dynamically populate the dropdown options
-  suggestions.forEach(suggestion => {
+  suggestions.forEach((suggestion) => {
     const option = document.createElement("option");
     option.value = suggestion;
     option.textContent = suggestion;
     suggestionDropdown.appendChild(option);
   });
-
 }
 
 function createRatingOptions(menuData) {
-  const ratingContainer = document.getElementById('rating-container');
+  const ratingContainer = document.getElementById("rating-container");
 
-  menuData.forEach(entry => {
-    const ratingDiv = document.createElement('div');
-    ratingDiv.classList.add('card');
+  menuData.forEach((entry) => {
+    const ratingDiv = document.createElement("div");
+    ratingDiv.classList.add("card");
 
     ratingDiv.innerHTML = `
-      <h3>${entry.Meal.toUpperCase()}</h3>
+      <h3>${entry.Meal.toUpperCase()} (${entry.Time})</h3>
       <label for="rating-${entry.Meal}">Rate (1-5): </label>
       <select id="rating-${entry.Meal}">
         <option value="" disabled selected>Select Rating</option>
@@ -219,78 +228,5 @@ function createRatingOptions(menuData) {
   });
 }
 
-async function fetchRatings() {
-  const API_KEY = "AIzaSyAju6jQzyeYW3PBxnOOhaEpFktwiPQoh_E";
-  const SHEET_ID = "11Oks2e6aCiWezsOdhXyXoHccOheP80gottTouZ_LfIg";
-
-  // Define meal types and their corresponding sheet ranges
-  const mealSheets = {
-    BREAKFAST: "breakfast_today!G:G",
-    BRUNCH: "brunch_today!G:G",
-    LUNCH: "lunch_today!G:G",
-    DINNER: "dinner_today!G:G",
-  };
-
-// Helper function to fetch data and update the meal header in the menu-container
-async function fetchAndUpdateMealRating(meal, range) {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
-
-  try {
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      console.warn(`Warning: Unable to fetch ratings for ${meal}. HTTP status: ${response.status}`);
-      updateMealHeaderWithRating(meal, "No Ratings Yet");
-      return; // Exit gracefully
-    }
-
-    const data = await response.json();
-
-    if (data.values && data.values.length > 0) {
-      const num_ratings = data.values.length;
-      const rawValue = data.values[0][0]; // Access the first row and first column
-      const ratingValue = parseFloat(rawValue).toFixed(2);
-      console.log(`${meal} - Rating fetched:`, ratingValue);
-
-      // Update header with the fetched rating
-      updateMealHeaderWithRating(meal, `${num_ratings} Ratings => ${ratingValue}/5`);
-    } else {
-      console.warn(`Warning: No ratings data found for ${meal}.`);
-      updateMealHeaderWithRating(meal, "No Ratings Yet");
-    }
-  } catch (error) {
-    console.warn(`Warning: Error occurred while fetching ratings for ${meal}:`, error);
-    updateMealHeaderWithRating(meal, "No Ratings Yet");
-  }
-}
-
-/**
- * Helper function to update the meal header with the rating or default message.
- * @param {string} meal - The meal name (e.g., "BREAKFAST").
- * @param {string} ratingText - The text to display in the header (e.g., "Rating: 4.5/5" or "No Ratings Yet").
- */
-function updateMealHeaderWithRating(meal, ratingText) {
-  const menuContainer = document.getElementById("menu-container");
-
-  // Find the corresponding mealDiv in the menu-container
-  const mealDiv = Array.from(menuContainer.getElementsByClassName("meal-section"))
-    .find(section => section.querySelector("h3")?.textContent.includes(meal));
-
-  if (mealDiv) {
-    const mealHeader = mealDiv.querySelector("h3");
-    if (mealHeader) {
-      mealHeader.textContent = `${meal.toUpperCase()}: ${ratingText}`;
-    }
-  } else {
-    console.warn(`Warning: No meal section found for ${meal}.`);
-  }
-}
-
-
-
-  // Loop through each meal type and fetch ratings
-  for (const [meal, range] of Object.entries(mealSheets)) {
-    await fetchAndUpdateMealRating(meal, range);
-  }
-}
-
+// Fetch ratings for the current day on page load
+window.onload = fetchRatings;

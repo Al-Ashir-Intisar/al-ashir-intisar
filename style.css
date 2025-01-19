@@ -60,4 +60,22 @@ body {
     bottom: 0;
     width: 100%;
   }
+
+  #date-box {
+    margin: 0 auto;
+    background-color: #000000;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #ffffff;
+    width: fit-content;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
   

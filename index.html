@@ -1,77 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google Site Verification -->
-  <meta name="google-site-verification" content="DwmRaLczC8DLZraLuDN2XoAcHPC1OuE04S8MjehF_Dg">
+    <!-- Google Site Verification -->
+    <meta
+      name="google-site-verification"
+      content="DwmRaLczC8DLZraLuDN2XoAcHPC1OuE04S8MjehF_Dg"
+    />
 
-  <title>ShouldIGo</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    #date-box {
-      margin: 0 auto;
-      background-color: #000000;
-      padding: 10px 15px;
-      border-radius: 8px;
-      font-size: 16px;
-      font-family: Arial, sans-serif;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      color: #ffffff;
-      width: fit-content;
-    }
+    <title>ShouldIGo</title>
+    <!-- Firebase SDK (Compatibility Mode) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>ShouldIGo</h1>
+      <div id="date-box"></div>
+      <p>Helping you decide your next meal at the cafeteria!</p>
+    </header>
 
-    header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-  </style>
-</head>
-<body>
+    <main>
+      <section id="menu">
+        <h2>Today's Menu</h2>
+        <div id="menu-container"></div>
+      </section>
+      <section id="suggestion">
+        <h2>Select Suggestion</h2>
+        <select id="suggestion-dropdown">
+          <option value="" disabled selected>Select a Suggestion</option>
+        </select>
+      </section>
 
-  <header>
-    <h1>ShouldIGo</h1>
-    <div id="date-box"></div>
-    <p>Helping you decide your next meal at the cafeteria!</p>
-  </header>
+      <section id="ratings">
+        <h2>Rate Meals</h2>
+        <p>Select a meal to rate:</p>
+        <div id="rating-container"></div>
+      </section>
+    </main>
 
-  <main>
-    <section id="menu">
-      <h2>Today's Menu</h2>
-      <div id="menu-container"></div>
-    </section>
-    <section id="suggestion">
-      <h2>Select Suggestion</h2>
-      <select id="suggestion-dropdown">
-        <option value="" disabled selected>Select a Suggestion</option>
-      </select>
-    </section>
-
-    <section id="ratings">
-      <h2>Rate Meals</h2>
-      <p>Select a meal to rate:</p>
-      <div id="rating-container"></div>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 ShouldIGo. All rights reserved.</p>
-    <button id="privacy-policy-button" onclick="window.location.href='privacy-policy.html';">
-      Privacy Policy
-    </button>
-  </footer>
-
-  <script>
-    // Set the current date in the date box
-    const dateBox = document.getElementById('date-box');
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const today = new Date().toLocaleDateString('en-US', options);
-    dateBox.textContent = today;
-  </script>
-  <script src="https://apis.google.com/js/api.js" async defer></script>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="script.js"></script>
-</body>
+    <footer>
+      <p>© 2025 ShouldIGo. All rights reserved.</p>
+      <button
+        id="privacy-policy-button"
+        onclick="window.location.href='privacy-policy.html';"
+      >
+        Privacy Policy
+      </button>
+    </footer>
+    <script src="https://apis.google.com/js/api.js" async defer></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="script.js"></script>
+  </body>
 </html>

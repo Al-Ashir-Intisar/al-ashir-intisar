@@ -110,13 +110,18 @@ function mergeStats(stats1, stats2) {
     if (!stats1[meal]) stats1[meal] = {};
 
     for (const foodItem in stats2[meal]) {
-      if (!stats1[meal][foodItem]) stats1[meal][foodItem] = {};
+      if (!stats1[meal][foodItem])
+        stats1[meal][foodItem] = { suggestions: {}, ratings: [] };
 
-      for (const suggestion in stats2[meal][foodItem]) {
-        stats1[meal][foodItem][suggestion] =
-          (stats1[meal][foodItem][suggestion] || 0) +
-          stats2[meal][foodItem][suggestion];
+      // Merge suggestions
+      for (const suggestion in stats2[meal][foodItem].suggestions) {
+        stats1[meal][foodItem].suggestions[suggestion] =
+          (stats1[meal][foodItem].suggestions[suggestion] || 0) +
+          stats2[meal][foodItem].suggestions[suggestion];
       }
+
+      // Merge ratings
+      stats1[meal][foodItem].ratings.push(...stats2[meal][foodItem].ratings);
     }
   }
   return stats1;
@@ -127,19 +132,26 @@ function processSuggestions(data) {
   const stats = {};
 
   Object.values(data).forEach((entry) => {
-    const { Meal, FoodItem, Suggestion } = entry;
+    const { Meal, FoodItem, Suggestion, Rating } = entry;
+    const mealKey = Meal.toUpperCase(); // Convert Meal to uppercase
 
-    if (!stats[Meal]) {
-      stats[Meal] = {};
+    if (!stats[mealKey]) {
+      stats[mealKey] = {};
     }
 
-    if (!stats[Meal][FoodItem]) {
-      stats[Meal][FoodItem] = {};
+    if (!stats[mealKey][FoodItem]) {
+      stats[mealKey][FoodItem] = { suggestions: {}, ratings: [] };
     }
 
+    // Count suggestions
     if (Suggestion) {
-      stats[Meal][FoodItem][Suggestion] =
-        (stats[Meal][FoodItem][Suggestion] || 0) + 1;
+      stats[mealKey][FoodItem].suggestions[Suggestion] =
+        (stats[mealKey][FoodItem].suggestions[Suggestion] || 0) + 1;
+    }
+
+    // Collect ratings
+    if (Rating !== undefined) {
+      stats[mealKey][FoodItem].ratings.push(Number(Rating));
     }
   });
 
@@ -160,22 +172,33 @@ function renderSuggestions(stats) {
     const thead = document.createElement("thead");
     thead.innerHTML = `
         <tr>
-          <th>Food Item</th>
+          <th>${meal}</th>
           <th>Suggestion</th>
           <th>Count</th>
+          <th>Average Rating</th>
         </tr>
       `;
     table.appendChild(thead);
 
     const tbody = document.createElement("tbody");
 
-    for (const [foodItem, suggestions] of Object.entries(foodItems)) {
+    for (const [foodItem, data] of Object.entries(foodItems)) {
+      const { suggestions, ratings } = data;
+
+      // Calculate average rating
+      const averageRating = ratings.length
+        ? (
+            ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length
+          ).toFixed(2)
+        : "N/A";
+
       for (const [suggestion, count] of Object.entries(suggestions)) {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${foodItem}</td>
             <td>${suggestion}</td>
             <td>${count}</td>
+            <td>${averageRating}</td>
           `;
         tbody.appendChild(row);
       }

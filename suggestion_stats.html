@@ -11,6 +11,7 @@
       body {
         font-family: Arial, sans-serif;
         margin: 20px;
+        background-color: #000000;
       }
       header {
         background: #ffc400;
@@ -26,6 +27,7 @@
         width: 100%;
         border-collapse: collapse;
         margin: 20px 0;
+        background-color: #ffffff;
       }
       th,
       td {
@@ -38,9 +40,21 @@
       }
       #back-to-home-button {
         display: block;
-        margin: 0 auto; /* Centers the button horizontally */
-        cursor: pointer; /* Pointer on hover */
-        text-align: center; /* Align text in the center */
+        margin: 0 auto;
+        background-color: #000000;
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        color: #ffffff;
+        width: fit-content;
+        cursor: pointer;
+      }
+      #back-to-home-button:hover {
+        background-color: #ffce09;
+        color: #000000;
       }
       #date-box {
         margin: 0 auto;
@@ -54,25 +68,44 @@
         color: #ffffff;
         width: fit-content;
       }
+      #time-range {
+        margin-top: 15px;
+        background-color: #000000;
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        color: #ffffff;
+        width: fit-content;
+        cursor: pointer;
+      }
+      #time-range:hover {
+        background-color: #ffce09;
+        color: #000000;
+      }
     </style>
   </head>
   <body>
-    <h1>
-      Suggestion Statistics
-      <div id="date-box"></div>
-    </h1>
-    <label for="time-range">Select Time Range: </label>
-    <select id="time-range">
-      <option value="today">Today</option>
-      <option value="7days">Last 7 Days</option>
-      <option value="30days">Last 30 Days</option>
-    </select>
-    <button
-      id="back-to-home-button"
-      onclick="window.location.href='index.html';"
-    >
-      Back to Home
-    </button>
+    <header>
+      <h1>
+        Suggestion Statistics
+        <div id="date-box"></div>
+      </h1>
+      <button
+        id="back-to-home-button"
+        onclick="window.location.href='index.html';"
+      >
+        Back to Home
+      </button>
+      <label for="time-range">Select Time Range: </label>
+      <select id="time-range">
+        <option value="today">Today</option>
+        <option value="7days">Last 7 Days</option>
+        <option value="30days">Last 30 Days</option>
+      </select>
+    </header>
     <div id="stats-container">
       <p>Loading suggestions...</p>
     </div>

@@ -26,6 +26,14 @@ body {
     flex-wrap: wrap;
     gap: 1em;
   }
+
+  .meal-section select {
+    width: 100%; /* Ensures dropdown spans the full width of its container */
+    max-width: 250px; /* Set a maximum width (adjust as needed) */
+    padding: 5px;
+    box-sizing: border-box; /* Ensures padding is included in width calculation */
+  }
+  
   
   .card {
     background: rgb(0, 0, 0);

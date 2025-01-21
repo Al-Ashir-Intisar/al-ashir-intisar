@@ -164,9 +164,9 @@ function renderSuggestions(stats) {
   container.innerHTML = ""; // Clear loading message
 
   for (const [meal, foodItems] of Object.entries(stats)) {
-    const mealTitle = document.createElement("h2");
-    mealTitle.textContent = `${meal}`;
-    container.appendChild(mealTitle);
+    // const mealTitle = document.createElement("h2");
+    // mealTitle.textContent = `${meal}`;
+    // container.appendChild(mealTitle);
 
     const table = document.createElement("table");
     const thead = document.createElement("thead");
@@ -213,7 +213,7 @@ function renderSuggestions(stats) {
 function displayNoData() {
   document.getElementById(
     "stats-container"
-  ).innerHTML = `<p>No suggestions available for the selected time range.</p>`;
+  ).innerHTML = `<p>No suggestions available for the selected time range...</p>`;
 }
 
 // Event listener for the dropdown menu

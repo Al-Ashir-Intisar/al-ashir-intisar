@@ -80,11 +80,12 @@ function fetchRatings() {
       console.log("Fetched ratings for today:", data);
       if (!data) {
         // If no ratings exist, update the UI with "No Ratings Yet"
+        console.log("No ratings found for today.");
         updateMenuRatings({
-          Breakfast: "No Ratings Yet",
-          Brunch: "No Ratings Yet",
-          Lunch: "No Ratings Yet",
-          Dinner: "No Ratings Yet",
+          BREAKFAST: "No Ratings Yet",
+          BRUNCH: "No Ratings Yet",
+          LUNCH: "No Ratings Yet",
+          DINNER: "No Ratings Yet",
         });
         return;
       }
@@ -93,8 +94,8 @@ function fetchRatings() {
       const mealRatings = { BREAKFAST: [], BRUNCH: [], LUNCH: [], DINNER: [] };
 
       Object.values(data).forEach((entry) => {
-        if (mealRatings[entry.Meal]) {
-          mealRatings[entry.Meal].push(entry.Rating);
+        if (mealRatings[entry.Meal.toUpperCase()]) {
+          mealRatings[entry.Meal.toUpperCase()].push(entry.Rating);
         }
       });
 

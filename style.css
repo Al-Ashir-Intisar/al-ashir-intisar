@@ -4,7 +4,6 @@ body {
     padding: 0;
     background: #000000;
     color: #ffffff;
-    overflow: hidden;
   }
   
   header {
@@ -35,14 +34,14 @@ body {
     box-sizing: border-box; /* Ensures padding is included in width calculation */
   }
   
-  .meal-section select:focus {
-    overflow-y: auto; /* Enables vertical scrolling if options overflow */
-  }
+  /* .meal-section select:focus { 
+    overflow-y: auto; 
+   } */
   
-  .meal-section select option {
-    white-space: wrap; /* Allows text to wrap to the next line */
-    text-overflow: ellipsis; /* Adds ellipsis if text is too long */
-  }
+  /* .meal-section select option {
+    white-space: wrap; 
+    text-overflow: ellipsis; 
+  } */
   
   .card {
     background: rgb(0, 0, 0);

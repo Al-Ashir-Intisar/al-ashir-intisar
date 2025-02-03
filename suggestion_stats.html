@@ -18,6 +18,7 @@
         color: rgb(0, 0, 0);
         text-align: center;
         padding: 1em 0;
+        margin-bottom: 30px;
       }
       h1 {
         text-align: center;
@@ -91,6 +92,19 @@
         background-color: #ffce09;
         color: #000000;
       }
+      footer {
+        text-align: center;
+        background: #ffc400;
+        color: white;
+        padding: 1em 0;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        margin-top: 30px;
+      }
+      #dropdown_text {
+        color: #000000;
+      }
     </style>
   </head>
   <body>
@@ -105,7 +119,7 @@
       >
         Back to Home
       </button>
-      <label for="time-range">Select Time Range: </label>
+      <p id="dropdown_text">Select Time Range:</p>
       <select id="time-range">
         <option value="today">Today</option>
         <option value="7days">Last 7 Days</option>
@@ -115,5 +129,8 @@
     <div id="stats-container">
       <p>Loading suggestions...</p>
     </div>
+    <footer>
+      <p>© 2025 CafeteriaStats.com All rights reserved.</p>
+    </footer>
   </body>
 </html>

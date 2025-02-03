@@ -156,7 +156,7 @@ function updateMenuRatings(averageRatings) {
 //     createRatingOptions(data);
 //   });
 
-// Populate the menu dynamically
+// Populate the menu dynamically from cloud storage
 fetch(
   "https://storage.googleapis.com/menu-buckets/script-output-files/menu_with_times.json"
 )
@@ -205,8 +205,19 @@ function populateMenu_from_web(menuData) {
         });
       });
 
+      // Append the dropdown to the meal section
       mealDiv.appendChild(dropdown);
       menuContainer.appendChild(mealDiv);
+
+      // Apply Tom Select ONLY to this newly created dropdown
+      new TomSelect(`#food-item-${mealType}`, {
+        create: false, // Prevents users from adding new options
+        sortField: {
+          field: "text",
+          direction: "asc",
+        },
+        maxItems: 1, // Allows only one selection
+      });
     }
   });
 
@@ -234,6 +245,15 @@ function populateMenu_from_web(menuData) {
     option.value = suggestion;
     option.textContent = suggestion;
     suggestionDropdown.appendChild(option);
+  });
+  // Apply Tom Select ONLY to this newly created dropdown
+  new TomSelect("#suggestion-dropdown", {
+    create: false, // Prevents users from adding new options
+    sortField: {
+      field: "text",
+      direction: "asc",
+    },
+    maxItems: 1, // Allows only one selection
   });
 }
 

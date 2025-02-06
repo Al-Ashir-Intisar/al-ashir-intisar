@@ -165,6 +165,7 @@ fetch(
     console.log("Menu Data from web:", data);
     populateMenu_from_web(data);
     createRatingOptions_from_web(data);
+    fetchRatings();
   });
 
 // Function to populate the menu dynamically from web scraped menu json

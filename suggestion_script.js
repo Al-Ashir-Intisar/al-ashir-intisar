@@ -164,10 +164,6 @@ function renderSuggestions(stats) {
   container.innerHTML = ""; // Clear loading message
 
   for (const [meal, foodItems] of Object.entries(stats)) {
-    // const mealTitle = document.createElement("h2");
-    // mealTitle.textContent = `${meal}`;
-    // container.appendChild(mealTitle);
-
     const table = document.createElement("table");
     const thead = document.createElement("thead");
     thead.innerHTML = `
@@ -182,6 +178,9 @@ function renderSuggestions(stats) {
 
     const tbody = document.createElement("tbody");
 
+    // Collect all rows in an array for sorting
+    const rows = [];
+
     for (const [foodItem, data] of Object.entries(foodItems)) {
       const { suggestions, ratings } = data;
 
@@ -193,16 +192,29 @@ function renderSuggestions(stats) {
         : "N/A";
 
       for (const [suggestion, count] of Object.entries(suggestions)) {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${foodItem}</td>
-            <td>${suggestion}</td>
-            <td>${count}</td>
-            <td>${averageRating}</td>
-          `;
-        tbody.appendChild(row);
+        rows.push({
+          foodItem,
+          suggestion,
+          count,
+          averageRating,
+        });
       }
     }
+
+    // Sort rows by count in descending order
+    rows.sort((a, b) => b.count - a.count);
+
+    // Append sorted rows to the table
+    rows.forEach(({ foodItem, suggestion, count, averageRating }) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+          <td>${foodItem}</td>
+          <td>${suggestion}</td>
+          <td>${count}</td>
+          <td>${averageRating}</td>
+        `;
+      tbody.appendChild(row);
+    });
 
     table.appendChild(tbody);
     container.appendChild(table);

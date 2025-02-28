@@ -124,6 +124,20 @@ body {
     cursor: pointer;
   }
 
+  #survey-page-button {
+    margin: 0 auto;
+    background-color: #000000;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #ffffff;
+    width: fit-content;
+    cursor: pointer;
+  }
+
 
   #suggestion-stats-button:hover {
     background-color: #ffce09;
@@ -131,6 +145,20 @@ body {
   }
   
   #privacy-policy-button {
+    margin: 0 auto;
+    background-color: #000000;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #ffffff;
+    width: fit-content;
+    cursor: pointer;
+  }
+
+  #home-button {
     margin: 0 auto;
     background-color: #000000;
     padding: 10px 15px;
